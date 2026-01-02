@@ -1,0 +1,8 @@
+name = "lean-iap"
+version = "0.1.0"
+defaultTargets = ["lean-iap"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.27.0-rc1"

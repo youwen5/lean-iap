@@ -2,6 +2,9 @@ name = "lean-iap"
 version = "0.1.0"
 defaultTargets = ["lean-iap"]
 
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"

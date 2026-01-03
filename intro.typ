@@ -17,6 +17,8 @@
 
 #outline(depth: 1)
 
+TODO
+
 == Insertion sort
 
 #columns()[

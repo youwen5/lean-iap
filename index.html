@@ -5,72 +5,73 @@
   <title>Programs and Proofs in Lean</title>
 </head>
 
-<!-- TODO mention SIPB -->
-
-<body>
+<body style="width:min(960px,90%);margin:auto">
   <h1 style="text-align:center">Programs and Proofs in Lean</h1>
-  <p style="text-align:center">IAP 2026</p>
+  <p style="text-align:center"><a href="https://sipb.mit.edu/iap/2026/">SIPB IAP 2026</a></p>
+  <p style="text-align:center">Taught by <a href="..">Anthony Wang</a></p>
   <hr>
   <h2>Description</h2>
   <p>
-    Tired of debugging bad code? Interested in weird programming languages? Curious about using computers for doing
-    math? In this class, we'll learn the Lean programming language, which is probably radically different from any other
-    language you've used before. We'll explore some of Lean's powerful and quirky features, such as dependent types,
-    type classes, monads, local imperativity, and tactics. Hopefully, this class will give you a fresh new perspective
-    on an alternative way of programming and doing math.
+    Tired of debugging bad code? Interested in weird programming languages? Curious about using computers for doing math? In this fast-paced not-for-credit class, we'll learn the Lean programming language, which is probably radically different from any other language you've used before. We'll explore some of Lean's powerful features, such as dependent types, type classes, monads, local imperativity, and tactics. Hopefully, this class will give you a fresh new perspective on an alternative way of programming and doing math.
   </p>
   <p>
-    <b>Prereqs:</b> Some prior experience with programming in any language and writing math proofs.
+    <b>Prereqs:</b> 6.101 or equivalent, 6.120 or equivalent
   </p>
   <p>
-    <b>Instructor:</b> <a href="..">Anthony Wang</a>
+    <b>Compared to 6.S057 Verified Software Engineering:</b> 6.S057 uses the Dafny automated theorem prover which has a long history of serious bugs. Don't use Dafny, it's unsound!
+  </p>
+  <p>
+    <b>Compared to 6.512 Formal Reasoning About Programs:</b> I haven't actually taken 6.512, but my friend said that class mostly just proves trivial things using Rocq instead of Lean. This class will instead use Mathlib and modern automated tactics like <code>grind</code> to prove some nontrivial theorems too.
   </p>
   <hr>
   <h2>Tentative Schedule</h2>
-  <p>
-    Psets are optional but highly recommended.
-  </p>
+  <p><b>Location and time:</b> TBD</p>
   <table>
     <tr>
-      <th>Lecture</th>
       <th>Date</th>
+      <th>Lecture</th>
       <th>Description</th>
       <th>Pset</th>
     </tr>
     <tr>
-      <td><a href="intro.pdf">Why Lean?</a></td>
       <td>TBD</td>
+      <td><a href="intro.pdf">Why Lean?</a></td>
       <td>
-        Cool Lean projects, basic dependent type theory, Curry-Howard
+        Cool Lean projects, ITPs vs ATPs, history of proof assistants, dependent type theory, Curry-Howard, calculus of inductive constructions
       </td>
       <td><a href="Pset1.lean">Pset1.lean</a></td>
     </tr>
     <tr>
-      <td><a href="Basic.lean">Basic Topics</a></td>
       <td>TBD</td>
+      <td><a href="Basic.lean">Basic Topics</a></td>
       <td>
-        Inductive types, pattern matching, polymorphism, type classes, functors, applicatives, monads, IO, vectors,
-        indexing proofs, the first table of the tactics cheatsheet, grind
+        Induction (recursion), inductive types, pattern matching, polymorphism, termination checking, type classes, functors, applicatives, monads, <code>do</code> notation, IO, vectors, indexing proofs, the first table of the tactics cheatsheet, <code>grind</code>
       </td>
       <td><a href="Pset2.lean">Pset2.lean</a></td>
     </tr>
     <tr>
-      <td>Lab</td>
       <td>TBD</td>
+      <td>Lab</td>
       <td>
         Work through previous psets
       </td>
       <td>None</td>
     </tr>
     <tr>
-      <td><a href="Advanced.lean">Advanced Topics</a></td>
       <td>TBD</td>
+      <td><a href="Advanced.lean">Advanced Topics</a></td>
       <td>
-        Universe lifting, universe polymorphism, impredicativity, proof irrelevance, subsingleton elimination, homotopy
-        type theory, choice, subtypes, quotients, algebraic hierarchies, diamonds, construction of reals, mvcgen, Hoare
-        triples, denotational semantics, metaprogramming
+        Universe polymorphism, universe lifting, impredicativity of <code>Prop</code>, proof irrelevance, subsingleton elimination, choice, subtypes, quotients, algebraic hierarchies in Mathlib, diamonds, construction of the reals, mvcgen, Hoare triples, denotational semantics, metaprogramming
       </td>
       <td><a href="Pset3.lean">Pset3.lean</a></td>
+    </tr>
+    <tr>
+      <td>TBD</td>
+      <td>Lab 2</td>
+      <td>
+        Work through previous psets
+      </td>
+      <td>None</td>
     </tr>
   </table>
   <hr>

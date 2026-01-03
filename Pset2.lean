@@ -62,5 +62,16 @@ theorem mapped_list_is_ssubset [DecidableEq β] {list newlist : Finset α} {gath
 /-
 ## Problem 2.7
 
-binops
+https://cjquines.com/files/binaryoperations.pdf
 -/
+
+example (f : α → α → α) l r (hl : ∀ x, f l x = x) (hr : ∀ x, f x r = x) : l = r := by
+  sorry
+
+example [Nonempty α] (f : α → α → α) (h : ∀ x y, ∃ z, f x z = y ∧ ∀ z', f x z = f x z' → z = z')
+    : ∃ g : α → α → α, ∀ x y, f x (g x y) = y ∧ g x (f x y) = y := by
+  sorry
+
+example (f g : α → α → α) i j (hid : ∀ x, f i x = x ∧ f x i = x ∧ g j x = x ∧ g x j = x)
+    (h : ∀ x y z w, f (g x y) (g z w) = g (f x z) (f y w)) : f = g := by
+  sorry

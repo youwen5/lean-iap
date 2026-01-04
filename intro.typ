@@ -18,6 +18,11 @@
 #outline(depth: 1)
 
 
+
+
+-
+
+
 Lean bio:
 - Created in 2013 by Leo de Moura at Microsoft Research
 - Lean 4 released in 2023, rewritten in Lean itself
@@ -87,26 +92,21 @@ https://borisalexeev.com/pdf/erdos707.pdf (Maybe can solve the LLM hallucination
 == Insertion sort
 
 #columns()[
-  #text(size: 17pt)[
+  #text(size: 19pt)[
     ```lean
     variable [LE α] [DecidableLE α] [Std.IsLinearOrder α] [BEq α] [LawfulBEq α] (xs : List α)
 
-    @[grind]
-    def insert (a : α)
+    @[grind] def insert (a : α)
       | [] => [a]
       | x :: xs =>
-        if a ≤ x then
-          a :: x :: xs
-        else
-          x :: insert a xs
+        if a ≤ x then a :: x :: xs
+        else x :: insert a xs
 
-    @[grind]
-    def insertionSort : List α → List α
+    @[grind] def insertionSort : List α → List α
       | [] => []
       | x :: xs => insert x (insertionSort xs)
 
-    @[grind]
-    def Sorted : List α → Prop
+    @[grind] def Sorted : List α → Prop
       | [] | [_] => True
       | x :: x' :: xs => x ≤ x' ∧ Sorted (x' :: xs)
 
@@ -123,36 +123,18 @@ https://borisalexeev.com/pdf/erdos707.pdf (Maybe can solve the LLM hallucination
   ]
 ]
 
+// https://cjquines.com/files/typetheory.pdf
+
+// History of proof assistants, ITPs vs ATPs, dependent type theory, Curry-Howard, calculus of inductive constructions
+
+
 /*
 
-Part 2 (30 mins): various random topics
-- First-order logic
-- Lambda calculus
-- ADTs
-- Pattern matching
-- Polymorphism
-- Functors
-- Applicatives
-- Monads
-- IO
-- do notation and local imperativity
-- Type classes
-- First-class propositions
-- Total and partial functions (0/0)
-- Dependent types
-- Curry-Howard
-- Tactics
-- grind
-- Induction and recursion
-- Inductive types and GADTs
+
+
 - Termination
 - Universes (What is type of type?)
 - Axioms
-- Prop weirdness
-- Unsafe Lean
-- FFI
-
-This looks super ambitious probably can only get through 20% of those topics
 
 Discussion questions:
 - Why types (in conventional programming languages)?
@@ -164,27 +146,5 @@ Discussion questions:
 - Is testing enough for real-world applications?
 
 Probably should explain Curry-Howard and propositions as types, proofs as terms
-
-
-Break in the middle
-
-
-Part 3 (1 hour):
-
-NNG4 maybe? Although I'm not a huge fan since it's kinda tedious
-
-However with only 2 hours of experience you can only really prove easy and trivial stuff
-
-Personally I'd feel a bit scammed if I signed up for a Lean class and only proved 2 + 2 = 4
-
-https://adam.math.hhu.de/
-https://adam.math.hhu.de/#/g/leanprover-community/nng4
-
-https://lean-lang.org/install/
-
-
-Resources:
-- https://leanprover-community.github.io/documentation.html
-- https://learnyouahaskell.com/chapters
 
 */

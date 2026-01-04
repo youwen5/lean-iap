@@ -12,6 +12,26 @@ example : 2 + 2 = 4 := by
   sorry
 
 
+abbrev SolutionSet (y : ℝ) : Set (ℝ × ℝ × ℝ × ℝ × ℝ) :=
+ {(x₁, x₂, x₃, x₄, x₅) |
+  (x₁ = 0 ∧ x₂ = 0 ∧ x₃ = 0 ∧ x₄ = 0 ∧ x₅ = 0) ∨
+  (x₁ = x₂ ∧ x₂ = x₃ ∧ x₃ = x₄ ∧ x₄ = x₅ ∧ y = 2) ∨
+  (y^2 + y - 1 = 0 ∧ ∃ s t,
+    x₁ = s ∧
+    x₂ = t ∧
+    x₃ = y * t - s ∧
+    x₄ = -(y * t) - y * s ∧
+    x₅ = y * s - t)}
+
+/-- Problem 4 from IMO 1963 -/
+example : (x₁, x₂, x₃, x₄, x₅) ∈ SolutionSet y ↔
+    (x₅ + x₂ = y * x₁ ∧
+     x₁ + x₃ = y * x₂ ∧
+     x₂ + x₄ = y * x₃ ∧
+     x₃ + x₅ = y * x₄ ∧
+     x₄ + x₁ = y * x₅) := by
+  sorry
+
 
 /-
 ## Problem 2.2
@@ -49,14 +69,12 @@ Quine
 
 -/
 
-theorem mapped_list_is_ssubset [DecidableEq β] {list newlist : Finset α} {gather : α → Finset β}
-    (h : newlist = list.map f)
-    {uv : β}
-    (hin : ∀ item, uv ∈ gather item → gather (f item) ⊂ gather item)
-    (hnin : ∀ item, uv ∉ gather item → gather (f item) = gather item)
-    (f_removes_uv : ∀ item, uv ∉ gather (f item))
-    (hexists : ∃ a ∈ list, uv ∈ gather a)
-    : newlist.biUnion gather ⊂ list.biUnion gather :=
+example [DecidableEq β] {A : Finset α} {g : α → Finset β}
+    (hin : ∀ y, x ∈ g y → g (f y) ⊂ g y)
+    (hnin : ∀ y, x ∉ g y → g (f y) = g y)
+    (hf : ∀ y, x ∉ g (f y))
+    (hA : ∃ a ∈ A, x ∈ g a)
+    : (A.map f).biUnion g ⊂ A.biUnion g :=
   sorry
 
 /-

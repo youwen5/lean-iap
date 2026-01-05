@@ -17,20 +17,24 @@
 
 #outline(depth: 1)
 
+= What is Lean?
 
+#slide[
+  - A very new programming language and proof assistant that enables building powerful abstractions #pause
 
+  - Extremely powerful type system, can encode almost all of math
 
--
+  - Compiles to C, fast during runtime
 
+  - 2013: Created by Leo de Moura at Microsoft #pause
 
-Lean bio:
-- Created in 2013 by Leo de Moura at Microsoft Research
-- Lean 4 released in 2023, rewritten in Lean itself
-- Named because it was supposed to be fast and minimal, not named after the drug
-- A very modern programming language that enables building powerful abstractions
+  - 2023: Lean 4 released, rewritten in Lean itself
+    - Except for the type checker which is in C++
+]
 
+// Named because it was supposed to be fast and minimal, not named after the drug
 
-
+== H
 
 
 = Cool Lean projects

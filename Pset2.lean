@@ -165,8 +165,8 @@ def yoneda' (f : Type u → Type v) [Functor f] (y : f α) : {β : Type u} → (
 Implement the function below that returns `42` if the input string is `"lean"` and otherwise leaves it unchanged. Since the type of this function is pretty complicated, we'll implement it using tactics mode, which isn't just for proofs!
 -/
 
-def lean_to_42_type (x : String) : Type :=
+def leanTo42Type (x : String) : Type :=
   if x = "lean" then ℕ else String
 
-def lean_to_42 (x : String) : lean_to_42_type x := by
+def leanTo42 (x : String) : leanTo42Type x := by
   sorry

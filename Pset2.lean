@@ -101,7 +101,7 @@ lemma lsb_largest (x : ℕ) (hx : 0 < x) : ∀ k > lsb x hx, ¬2 ^ k ∣ x := by
 /-
 ## 2.5
 
-Create a `structure` called `Color` to represent RGB colors. Then write a function that parses a [P6 PPM image](https://en.wikipedia.org/wiki/Netpbm#PPM_example) and returns an `Except` type with either an `Array (Array Color)` or an error message string. Prove that all array accesses are in bounds.
+Create a `structure` called `Color` to represent RGB colors. Then write a function that parses a [P6 PPM image](https://en.wikipedia.org/wiki/Netpbm#PPM_example) and returns an `Except` type with either an `Array (Array Color)` or an error message string. Prove that all array accesses are in bounds. Then, run your function on the file `image.ppm` using `IO.FS.readBinFile`.
 -/
 
 def parsePPM (bytes : ByteArray) := do

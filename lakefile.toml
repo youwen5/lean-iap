@@ -5,7 +5,19 @@ defaultTargets = ["lean-iap"]
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 
+[[lean_lib]]
+name = "Cluedump"
+
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.27.0-rc1"
+
+[[require]]
+name = "LeanTex"
+git = "https://github.com/usernamenotavailablepleasechooseanother/leantex.git"
+
+# automatically inserted by LeanTex, DO NOT MODIFY
+[[lean_exe]]
+name = "GenerateSlides"
+root = "GenerateSlides"

@@ -3,120 +3,100 @@ import LeanTeX
 #latex_executable "lualatex"
 
 #latex_preamble [|
-  \title{Lean}
+  \usetheme{Madrid}
+  \hypersetup{colorlinks=true}
+  \title{Programs and Proofs}
+  \subtitle{\includegraphics[scale=0.5]{lean_logo.png}}
   \author{Anthony Wang (xy)}
 |]
 
 #latex_slide do
   latex![| \titlepage |]
 
-#latex_slide "Example Slide" do
+#latex_slide "Cool Lean projects" do
+  -- Instead of telling you how cool Lean is, let's look at some cool Lean projects
+  -- It can do things that no other language in existence can do
   \begin{itemize}
-    \item{"Writing LaTeX-like code within Lean"}
-    \item{"Looks like LaTeX"}
-    \item{"is actually Lean~"}
+    -- Can do general-purpose programming in Lean, fast and no GC
+    \item{"\\href{https://github.com/kmill/lean4-raytracer}{Raytracer}"}
+    -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
+    \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
+    -- Machine-checked proofs
+    \item{"\\href{https://www.youtube.com/watch?v=jDTPBdxmxKw}{Rupert}"}
+    -- Dependently-typed tensor dimensions
+    \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
+    -- "Math at web scale"
+    \item{"\\href{https://teorth.github.io/equational_theories/paper.pdf}{Equational theories}"}
+    -- Webdev using Lean!
+    \item{"\\href{https://codeberg.org/exozyme/ring3}{Webring generator}"}
+    -- If it compiles, it's most likely correct and bug-free
+    \item{"\\href{https://github.com/konne88/functorio}{Functorio}"}
+    -- Scripting language for Blender-like software
+    \item{"\\href{https://github.com/lecopivo/HouLean}{HouLean}"}
+    -- This is how everyone will be doing math in 20 years (maybe), 250k theorems, "community-driven effort to digitize mathematics"
+    \item{"\\href{https://eric-wieser.github.io/mathlib-import-graph/}{Mathlib}"}
+    -- Useful for teaching, instant feedback
+    \item{"\\href{https://teorth.github.io/analysis/sec21/}{Analysis textbook}"}
+    -- Maybe can solve the LLM hallucination problem, since LLMs suck at reasoning
+    \item{"\\href{https://borisalexeev.com/pdf/erdos707.pdf}{Erdős 707}"}
+    -- This presentation! Good for embedding DSLs
+    \item{"\\href{https://github.com/kiranandcode/LeanTeX/}{LeanTeX}"}
   \end{itemize}
-  latex![| $\mathsf{a}$ |]
-  with steps [step1, step2, step3, step4] do
-     latex![|
-       \begin{tikzpicture}
-          \draw<@{step1}->  (0,0) rectangle ++(1,1);
-          \draw<@{step2}->  (1,0) rectangle ++(1,1);
-          \draw<@{step3}->  (2,0) rectangle ++(1,1);
-          \draw<@{step4}->  (3,0) rectangle ++(1,1);
-       \end{tikzpicture}
-     |]
 
-#latex_slide "Testing" do
-  latex![|
-  |]
+#latex_slide "History of formalized math" do
+  \begin{itemize}
+    \item{"1910: Principia Mathematica \\includegraphics{Principia_Mathematica_54-43.png}"}
+    \item{"1931: Gödel's incompleteness theorems"}
+  \end{itemize}
 
+#latex_slide "History (cont.)" do
+  \begin{itemize}
+    \item{"1936: Entscheidungsproblem proven undecidable"}
+    \item{"1956: Logic Theorist (\"first AI program\") \\includegraphics[scale=0.1]{lt.jpg}"} -- This book is in the SIPB library!
+  \end{itemize}
 
-/-
-#import "@preview/touying:0.6.1": *
-#import themes.university: *
+#latex_slide "History (cont.)" do
+  \begin{itemize}
+    \item{"1976: Four color theorem proved using brute force (verified in Rocq in 2005)"} -- AKA Coq
+    -- People were upset because proofs are about understanding, not correctness
+  \end{itemize}
 
-#show link: underline
-#show: university-theme.with(
-  aspect-ratio: "16-9",
-  config-info(
-    title: [Programs and Proofs],
-    subtitle: [#image("img/lean_logo.svg", height: 50%)],
-    author: [Anthony Wang (xy)],
-    date: datetime.today(),
-  ),
-)
-#show image: it => align(center, it)
+#latex_slide "ITPs vs ATPs" do
+  \begin{itemize}
+    \item{"Two main paradigms"}
+    \item{"ITP = Interactive theorem prover, uses tactics, ex: Rocq, Lean"} -- Rocq used by FRAP
+    \item{"ATP = Automated ..., uses SMT, ex: Dafny"} -- Dafny used by Verified SWE class
+    \item{"ATPs are buggier, more brittle, require learning arcane SMT magic"}
+  \end{itemize}
 
-#title-slide()
+#latex_slide "Foundations" do
+  \begin{itemize}
+    \item{"Set theory (Mizar, Metamath)"}
+    \item{"Simple type theory (Isabelle/HOL)"}
+    \item{"Dependent type theory (Lean, Rocq, Agda, Idris)"}
+  \end{itemize}
+  -- https://mathoverflow.net/questions/376839/what-makes-dependent-type-theory-more-suitable-than-set-theory-for-proof-assista/376973#376973
 
-#outline(depth: 1)
+#latex_slide "Lean bio" do
+  \begin{itemize}
+    \item{"2013: Created by Leo de Moura at Microsoft, previously created Z3"}
+    \item{"2023: Lean 4 released, rewritten in Lean (except type checker)"} -- Type checker still in C++ for performance reasons
+    \item{"Not named after the drug"} -- Allegedly the name is because it was supposed to be fast and minimal but it's not very minimal now
+  \end{itemize}
+  -- Also, Leo LinkedIn stuff and his famous quote
 
-= Cool Lean projects
+#latex_slide "Is Lean practical?" do
+  \begin{itemize}
+    \item{"\"Invisible math\" \\includegraphics[scale=0.5]{Vesica_piscis_circles.png}"}
+    \item{"Automated tactics: grind, hammer, canonical"}
+    \item{"AI: \\href{https://aristotle.harmonic.fun/}{Harmonic's Aristotle}, AlphaProof"}
+  \end{itemize}
 
-// Instead of telling you how cool Lean is, let's look at some cool Lean projects
-// It can do things that no other language in existence can do
-
-- #link("https://github.com/kmill/lean4-raytracer")[Raytracer] // Can do general-purpose programming in Lean, fast and no GC
-- #link("https://git.unnamed.website/leanime/tree/Leanime.lean")[Video player] // Lean's metalanguage is just Lean, can make the video player run at compile time too!
-- #link("https://www.youtube.com/watch?v=jDTPBdxmxKw")[Rupert] // Machine-checked proofs
-- #link("https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network")[SciLean] // Dependently-typed tensor dimensions
-- #link("https://teorth.github.io/equational_theories/paper.pdf")[Equational theories] // "Math at web scale"
-- #link("https://codeberg.org/exozyme/ring3")[Webring generator] // Webdev using Lean!
-- #link("https://github.com/konne88/functorio")[Functorio] // If it compiles, it's most likely correct and bug-free
-- #link("https://github.com/lecopivo/HouLean")[HouLean] // Scripting language for Blender-like software
-- #link("https://eric-wieser.github.io/mathlib-import-graph/")[Mathlib] // This is how everyone will be doing math in 20 years (maybe), 250k theorems, "community-driven effort to digitize mathematics"
-- #link("https://teorth.github.io/analysis/sec21/")[Analysis] // Useful for teaching, instant feedback
-- #link("https://borisalexeev.com/pdf/erdos707.pdf")[Erdős 707] // Maybe can solve the LLM hallucination problem, since LLMs suck at reasoning
-- #link("https://github.com/kiranandcode/LeanTeX/")[LeanTeX] // Good for embedding DSLs
-
-
-// Principia Mathematica
-// Incompleteness theorems
-// Images from those SIPB books
-// ITPs vs ATPs
-// Set theory (Mizar, Metamath)
-// Simple type theory (Isabelle/HOL)
-// Dependent type theory (Lean, Rocq, Agda, Idris)
-// History
-// Leo quote
-// LinkedIn
-// Not the drug
-
-
-#slide[
-  - A very new programming language and proof assistant that enables building powerful abstractions #pause
-
-  - Extremely powerful type system, can encode almost all of math
-
-  - Compiles to C, fast during runtime
-
-  - 2013: Created by Leo de Moura at Microsoft #pause
-
-  - 2023: Lean 4 released, rewritten in Lean itself
-    - Except for the type checker which is in C++
-]
-
-// Named because it was supposed to be fast and minimal, not named after the drug
-
-
-// https://cjquines.com/files/typetheory.pdf
-
-
-/*
-
-
-Discussion questions:
-- Why types (in conventional programming languages)?
-- Has anyone used a Python type checker or a statically typed programming language?
-- What is a proof?
-- What's the purpose of a proof? How do we know when a proof is correct?
-- What does it mean for a program to be "correct" or "bug-free" and is this goal attainable?
-- Is AI gonna replace human programmers?
-- Is testing enough for real-world applications?
-
-Probably should explain Curry-Howard and propositions as types, proofs as terms
-
-*/
-
--/
+-- #latex_slide "Why Lean?" do
+--   \begin{itemize}
+--     \item{"Correctness"}
+--     \item{"Refactoring math"}
+--     \item{"Scalable"}
+--     \item{"Fun!"}
+--   \end{itemize}
+-- https://www.imo.universite-paris-saclay.fr/~patrick.massot/files/exposition/why_formalize.pdf

@@ -16,6 +16,7 @@ rev = "v4.27.0-rc1"
 [[require]]
 name = "LeanTex"
 git = "https://github.com/usernamenotavailablepleasechooseanother/leantex.git"
+rev = "main"
 
 # automatically inserted by LeanTex, DO NOT MODIFY
 [[lean_exe]]

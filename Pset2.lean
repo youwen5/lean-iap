@@ -162,11 +162,7 @@ def yoneda' (f : Type u → Type v) [Functor f] (y : f α) : {β : Type u} → (
 /-
 ## 2.10
 
-Implement the function below that returns `42` if the input string is `"lean"` and otherwise leaves it unchanged. Since the type of this function is pretty complicated, we'll implement it using tactics mode, which isn't just for proofs!
+Show that the `Id'` type contructor below is an instance of `Monad` and `LawfulMonad`.
 -/
 
-def leanTo42Type (x : String) : Type :=
-  if x = "lean" then ℕ else String
-
-def leanTo42 (x : String) : leanTo42Type x := by
-  sorry
+def Id' (type : Type u) := type

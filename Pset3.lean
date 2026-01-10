@@ -6,7 +6,7 @@ open Std.Do
 /-
 # Pset 3
 
-## Problem 3.1
+## 3.1
 
 Prove the following lemma.
 -/
@@ -15,7 +15,7 @@ lemma bounded_by_reciprocals (x : ℝ) (hx : 0 ≤ x) (h : ∀ n, x ≤ 1 / n) :
   sorry
 
 /-
-## Problem 3.2
+## 3.2
 
 Prove the following lemmas.
 -/
@@ -29,7 +29,7 @@ lemma usa1979_p1 : ∀ e, e ∈ SolutionSet ↔ (e.map (· ^ 4)).sum = 1599 := b
   sorry
 
 /-
-## Problem 3.3
+## 3.3
 
 Here's a weird sorting algorithm:
 -/
@@ -82,32 +82,39 @@ theorem ICan'tBelieveICanProveItCanSort : (ICan'tBelieveItCanSort A).Perm A
 end Sorting
 
 /-
-## Problem 3.4
+## 3.4
+
+Implement the function below that returns `42` if the input string is `"lean"` and otherwise leaves it unchanged. Since the type of this function is pretty complicated, we'll implement it using tactics mode, which isn't just for proofs!
+-/
+
+def leanTo42Type (x : String) : Type :=
+  if x = "lean" then ℕ else String
+
+def leanTo42 (x : String) : leanTo42Type x := by
+  sorry
+
+/-
+## 3.5
 
 -/
 
 /-
-## Problem 3.5
+## 3.6
 
 -/
 
 /-
-## Problem 3.6
+## 3.7
 
 -/
 
 /-
-## Problem 3.7
+## 3.8
 
 -/
 
 /-
-## Problem 3.8
-
--/
-
-/-
-## Problem 3.9
+## 3.9
 
 -/
 
@@ -121,7 +128,7 @@ example : minFac '⓫'.toNat|>λ_11↦(·+97)<$>[0/0,_11,-(⟨1,0,2,4⟩:ℍ[ℤ
 
 
 /-
-## Problem 3.10
+## 3.10
 
 fenwick
 -/

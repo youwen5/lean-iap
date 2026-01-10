@@ -66,9 +66,6 @@ lemma pow_two_larger : n ≤ 2 ^ n := by
 lemma pow_two_larger' (h : 2 ≤ n) : (n - 2) * 2 ≤ 2 ^ (n - 1) := by
   sorry
 
-lemma bounded_by_reciprocals (x : ℝ) (hx : 0 ≤ x) (h : ∀ n, x ≤ 1 / n) : x = 0 := by
-  sorry
-
 /-
 ## 2.3
 

@@ -8,32 +8,28 @@ open Std.Do
 
 ## Problem 3.1
 
+Prove the following lemma.
+-/
 
+lemma bounded_by_reciprocals (x : ℝ) (hx : 0 ≤ x) (h : ∀ n, x ≤ 1 / n) : x = 0 := by
+  sorry
+
+/-
+## Problem 3.2
+
+Prove the following lemmas.
 -/
 
 lemma imo1964_p1b (n : ℕ) : (2 ^ n + 1) % 7 ≠ 0 := by
   sorry
-
-abbrev solution_set : Set (ℂ × ℂ × ℂ) := { ⟨1, 1, 1⟩ }
-
-lemma usa1973_p4 (x y z : ℂ) :
-    x + y + z = 3 ∧
-    x ^ 2 + y ^ 2 + z ^ 2 = 3 ∧
-    x ^ 3 + y ^ 3 + z ^ 3 = 3 ↔ ⟨x,y,z⟩ ∈ solution_set := by
-  sorry
-
--- structure MultisetNatOfLen14 where
---   s : Multiset ℕ
---   p : Multiset.card s = 14
 
 abbrev SolutionSet : Set <| Vector ℕ 14 := sorry
 
 lemma usa1979_p1 : ∀ e, e ∈ SolutionSet ↔ (e.map (· ^ 4)).sum = 1599 := by
   sorry
 
-
 /-
-## Problem 3.2
+## Problem 3.3
 
 Here's a weird sorting algorithm:
 -/
@@ -86,44 +82,46 @@ theorem ICan'tBelieveICanProveItCanSort : (ICan'tBelieveItCanSort A).Perm A
 end Sorting
 
 /-
-## Problem 3.3
+## Problem 3.4
+
 -/
 
-namespace Kadane
+/-
+## Problem 3.5
 
-def kadane (A : Array ℤ) := Id.run do
-  let mut cur := 0
-  let mut ans := 0
-  for x in A do
-    cur := max x (cur + x)
-    ans := max ans cur
-  return ans
-
-def is_max_nonempty_suffix (xs : List ℤ) m :=
-  (∃ i ≤ xs.length, (xs.drop i).sum = m) ∧ ∀ i < xs.length, (xs.drop i).sum ≤ m
-
-def is_max_subarray (xs : List ℤ) m :=
-  0 ≤ m ∧ (∃ i ≤ xs.length, ∃ j ≤ xs.length, (xs.extract i j).sum = m) ∧ ∀ i ≤ xs.length, ∀ j ≤ xs.length, (xs.extract i j).sum ≤ m
-
-lemma drop_append_sum [AddMonoid α] {xs ys : List α} (hi : i ≤ xs.length) : (xs ++ ys |>.drop i).sum = (xs.drop i).sum + ys.sum := by
-  sorry
-
-lemma extract_end_drop {xs : List α} (h : j = xs.length) : xs.extract i j = xs.drop i := by
-  sorry
-
-lemma extract_in_bounds {xs ys : List α} (hi : i ≤ xs.length) (hj : j ≤ xs.length) : (xs ++ ys).extract i j = xs.extract i j := by
-  sorry
-
-theorem kadane_correct : is_max_subarray A.toList (kadane A) := by
-  generalize h : kadane A = x
-  apply Id.of_wp_run_eq h
-  mvcgen
-  sorry
-
-end Kadane
+-/
 
 /-
-## Problem 3.4
+## Problem 3.6
+
+-/
+
+/-
+## Problem 3.7
+
+-/
+
+/-
+## Problem 3.8
+
+-/
+
+/-
+## Problem 3.9
+
+-/
+
+def solution : String := sorry
+
+open Nat Real Quaternion CoxeterMatrix Lean in
+example : minFac '⓫'.toNat|>λ_11↦(·+97)<$>[0/0,_11,-(⟨1,0,2,4⟩:ℍ[ℤ])^2|>.re.toNat,defaultMaxRecDepth%101,catalan 4,_11,(φ∘φ∘φ∘φ∘φ∘φ<|4‼‼)!,↑((4:Fin 24)-6),⌈deriv (sin ·^69) π⌉₊,_11,Nat.card<|Aₙ 2|>.Group]
+    = solution.toList.map Char.toNat := by
+  sorry
+
+
+
+/-
+## Problem 3.10
 
 fenwick
 -/

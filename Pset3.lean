@@ -8,23 +8,28 @@ open Std.Do
 
 ## Problem 3.1
 
-In Python, we can use `'We are the {} who say "{}!"'.format('knights', 'Ni')` (or f-strings in modern Python) to fill in values in a string with placeholders. Similarly, in Rust we can use `println!("{:?} {}", [1, 2, 3], "hi")` to print out a string with the placeholders filled in with the function arguments. But what are the types of `format()` and `println!()`? These functions take in a variable number of arguments, depending on the number of placeholders in the string, and for `println!()`, `{:?}` corresponds to arrays and `{}` corresponds to regular values.
-
-Python sidesteps the question by being dynamically typed, ew. Rust also cheats here using a macro, which is also the approach used by Lean's f-string equivalent, `s!""`. These languages don't have type systems that are strong enough to express the type of a string format function, but Lean does! In this problem, we will write a `format` function
-
-
-
 
 -/
 
+lemma imo1964_p1b (n : ℕ) : (2 ^ n + 1) % 7 ≠ 0 := by
+  sorry
 
-inductive Fmt where
-  | Arg : Fmt → Fmt
-  | Nat : Fmt → Fmt
-  | Char : Char → Fmt → Fmt
-  | End
+abbrev solution_set : Set (ℂ × ℂ × ℂ) := { ⟨1, 1, 1⟩ }
 
+lemma usa1973_p4 (x y z : ℂ) :
+    x + y + z = 3 ∧
+    x ^ 2 + y ^ 2 + z ^ 2 = 3 ∧
+    x ^ 3 + y ^ 3 + z ^ 3 = 3 ↔ ⟨x,y,z⟩ ∈ solution_set := by
+  sorry
 
+-- structure MultisetNatOfLen14 where
+--   s : Multiset ℕ
+--   p : Multiset.card s = 14
+
+abbrev SolutionSet : Set <| Vector ℕ 14 := sorry
+
+lemma usa1979_p1 : ∀ e, e ∈ SolutionSet ↔ (e.map (· ^ 4)).sum = 1599 := by
+  sorry
 
 
 /-

@@ -36,6 +36,36 @@ theorem false : False :=
 
 
 
+-- https://hirrolot.github.io/posts/why-static-languages-suffer-from-complexity.html
+
+inductive Fmt where
+  | Arg : Fmt → Fmt
+  | Nat : Fmt → Fmt
+  | Char : Char → Fmt → Fmt
+  | End
+
+def toFmt : List Char → Fmt
+  | '*' :: xs => .Arg <| toFmt xs
+  | '#' :: xs => .Nat <| toFmt xs
+  | x :: xs => .Char x <| toFmt xs
+  | [] => .End
+
+def FormatType : Fmt → Type 1
+  | .Arg fmt => {α : Type} → [ToString α] → α → FormatType fmt
+  | .Nat fmt => Nat → FormatType fmt
+  | .Char _ fmt => FormatType fmt
+  | .End => PLift String
+
+def format (fmt : String) : FormatType <| toFmt fmt.toList :=
+  let rec formatAux (acc : String) : (fmt : Fmt) → FormatType fmt
+    | .Arg fmt => fun x ↦ formatAux (acc ++ toString x) fmt
+    | .Nat fmt => fun x ↦ formatAux (acc ++ "#" ++ toString x) fmt
+    | .Char c fmt => formatAux (acc.push c) fmt
+    | .End => .up acc
+  formatAux "" <| toFmt fmt.toList
+
+#eval format "Hello * # * *" (-1) 1 [42, 69] "Meow" |>.down
+
 
 
 

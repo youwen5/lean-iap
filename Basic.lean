@@ -29,10 +29,10 @@ instance : Add (Set α) := ⟨(· ∆ ·)⟩
 @[simp]
 lemma add_def {a b : Set α} : a + b = a ∆ b := rfl
 
-instance : Zero (Set α) := ⟨{}⟩
+instance : Zero (Set α) := ⟨∅⟩
 
 @[simp]
-lemma zero_def : (0 : Set α) = {} := rfl
+lemma zero_def : (0 : Set α) = ∅ := rfl
 
 instance : Neg (Set α) := ⟨id⟩
 

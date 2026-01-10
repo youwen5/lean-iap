@@ -1,15 +1,16 @@
 import Std.Tactic.Do
 import Mathlib
 
+
+namespace Paradox
+
 -- https://leanprover.zulipchat.com/#narrow/channel/236446-Type-theory/topic/Paradoxes.20and.20Type.20Universes/with/538016579
 
 axiom Bad : Type
 
 axiom bad : (α : Type) × α ↪ Bad
 
-noncomputable section
-
-def k (P : Bad → Prop) : Bad :=
+noncomputable def k (P : Bad → Prop) : Bad :=
   bad ⟨Bad → Prop, P⟩
 
 def Q (b : Bad) : Prop :=
@@ -30,13 +31,11 @@ theorem false : False :=
   down (up fun h => down h h) (up fun h => down h h)
 
 -- 'false' depends on axioms: [Bad, bad]
-#print axioms _root_.false
+#print axioms Paradox.false
+
+end Paradox
 
 
-
-
-
--- https://hirrolot.github.io/posts/why-static-languages-suffer-from-complexity.html
 
 inductive Fmt where
   | Arg : Fmt → Fmt

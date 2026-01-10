@@ -20,6 +20,15 @@ def a := 1
 #check a
 
 
+def gcd (a b : Nat) : Nat :=
+  if b > 0 then gcd b (a % b) else a
+termination_by b
+decreasing_by
+  exact Nat.mod_lt a (by assumption)
+
+#loogle _ % _ < _
+
+
 def my_add [Add α] (a b : α) := a + b
 
 #eval 1.1 + 2.3
@@ -236,6 +245,15 @@ def ICan'tBelieveItCanSort [LinearOrder α] (A : Array α) := Id.run do
   return A.toArray
 
 end Sorting
+
+-- Local imperativity: https://dl.acm.org/doi/10.1145/3547640
+def kadane (A : Array ℤ) := Id.run do
+  let mut cur := 0
+  let mut ans := 0
+  for x in A do
+    cur := max x (cur + x)
+    ans := max ans cur
+  return ans
 
 
 -- This example is from the Lean homepage

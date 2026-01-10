@@ -130,7 +130,7 @@ lemma crazy_lemma [DecidableEq β] {A : Finset α} {g : α → Finset β}
 
 Implement applicative `seq` for a monad, first without using `do` notation, and then simplify your implementation using `do`.
 
-Furthermore, given the `fish` operator, implement the other two equivalent formulations of monads.
+Furthermore, given the `fish` function, implement the other two equivalent formulations of monads.
 -/
 
 def appSeq [Monad m] (fs : m (α → β)) (as : m α) : m β :=

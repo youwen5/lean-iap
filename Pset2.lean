@@ -114,30 +114,16 @@ Create a new file called `Quine.lean` and add it as a `[[lean_exe]]` in the `lak
 
 ## 2.7
 
-Prove the following lemma.
+Give an example of a functor that isn't an applicative and an applicative that isn't a monad. For each example, determine which law is violated and prove it in Lean.
 -/
 
-lemma crazy_lemma [DecidableEq β] {A : Finset α} {g : α → Finset β}
-    (hin : ∀ y, x ∈ g y → g (f y) ⊂ g y)
-    (hnin : ∀ y, x ∉ g y → g (f y) = g y)
-    (hf : ∀ y, x ∉ g (f y))
-    (hA : ∃ a ∈ A, x ∈ g a)
-    : (A.map f).biUnion g ⊂ A.biUnion g :=
-  sorry
+
 
 /-
 ## 2.8
 
-Implement applicative `seq` for a monad, first without using `do` notation, and then simplify your implementation using `do`.
-
-Furthermore, given the `fish` function, implement the other two equivalent formulations of monads.
+Another equivalent way to define monads is with a type class with a `fish` function of signature `(α → m β) → (β → m γ) → α → m γ`. Given this `fish` function, implement the other two equivalent formulations of monads.
 -/
-
-def appSeq [Monad m] (fs : m (α → β)) (as : m α) : m β :=
-  sorry
-
-def appSeqDo [Monad m] (fs : m (α → β)) (as : m α) : m β := do
-  sorry
 
 def joinFromFish (m : Type u → Type u) (fish : {α β γ : Type u} → (α → m β) → (β → m γ) → α → m γ) :
     m (m α) → m α :=
@@ -150,14 +136,31 @@ def bindFromFish (m : Type u → Type u) (fish : {α β γ : Type u} → (α →
 /-
 ## 2.9
 
-Implement these functions by looking carefully at the type signatures of what you're given.
+Implement applicative `seq` for a monad, first without using `do` notation, and then simplify your implementation using `do`. Finally, prove that your `seq` function satisfies the applicative laws.
 -/
 
-def yoneda (f : Type u → Type v) [Functor f] (g : {β : Type u} → (α → β) → f β) : f α :=
+namespace Monad
+
+variable [Monad m] [LawfulMonad m]
+
+def appSeq (fs : m (α → β)) (as : m α) : m β :=
   sorry
 
-def yoneda' (f : Type u → Type v) [Functor f] (y : f α) : {β : Type u} → (α → β) → f β :=
+def appSeqDo (fs : m (α → β)) (as : m α) : m β := do
   sorry
+
+infixl:60 " <*>' " => fun x y ↦ appSeq x y
+
+lemma pure_seq (g : α → β) (x : m α) : pure g <*>' x = g <$> x := by
+  sorry
+
+lemma seq_pure (g : m (α → β)) (x : α) : g <*>' pure x = (· x) <$> g := by
+  sorry
+
+lemma seq_assoc (x : m α) (g : m (α → β)) (h : m (β → γ)) : h <*>' (g <*>' x) = (· ∘ ·) <$> h <*>' g <*>' x := by
+  sorry
+
+end Monad
 
 /-
 ## 2.10

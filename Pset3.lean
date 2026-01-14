@@ -96,12 +96,28 @@ def leanTo42 (x : String) : leanTo42Type x := by
 /-
 ## 3.5
 
+Prove the following lemma.
 -/
+
+lemma crazy_lemma [DecidableEq β] {A : Finset α} {g : α → Finset β}
+    (hin : ∀ y, x ∈ g y → g (f y) ⊂ g y)
+    (hnin : ∀ y, x ∉ g y → g (f y) = g y)
+    (hf : ∀ y, x ∉ g (f y))
+    (hA : ∃ a ∈ A, x ∈ g a)
+    : (A.map f).biUnion g ⊂ A.biUnion g :=
+  sorry
 
 /-
 ## 3.6
 
+Implement these functions by looking carefully at the type signatures of what you're given.
 -/
+
+def yoneda (f : Type u → Type v) [Functor f] (g : {β : Type u} → (α → β) → f β) : f α :=
+  sorry
+
+def yoneda' (f : Type u → Type v) [Functor f] (y : f α) : {β : Type u} → (α → β) → f β :=
+  sorry
 
 /-
 ## 3.7

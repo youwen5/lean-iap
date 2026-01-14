@@ -24,7 +24,7 @@ def gcd (a b : Nat) : Nat :=
   if b > 0 then gcd b (a % b) else a
 termination_by b
 decreasing_by
-  exact Nat.mod_lt a (by assumption)
+  exact Nat.mod_lt a ‹_›
 
 #loogle _ % _ < _
 

@@ -26,14 +26,14 @@ import LeanTeX
     \item{"\\href{https://codeberg.org/exozyme/ring3/src/branch/master/Main.lean}{Webring generator}"}
     -- Scripting language for Blender-like software
     \item{"\\href{https://github.com/lecopivo/HouLean}{HouLean}"}
-    -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
-    \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
     -- Dependently-typed tensor dimensions (Q: have you ever had a dimension mismatch?)
     \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
     -- If it compiles, it's most likely correct and bug-free (like in Rust)
     \item{"\\href{https://github.com/konne88/functorio}{Functorio}"}
     -- Machine-checked proofs
     \item{"\\href{https://www.youtube.com/watch?v=jDTPBdxmxKw}{Rupert}"}
+    -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
+    \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
     -- "Math at web scale"
     \item{"\\href{https://teorth.github.io/equational_theories/paper.pdf}{Equational theories}"}
     -- This is how everyone will be doing math in 20 years (maybe), 250k theorems, "community-driven effort to digitize mathematics"

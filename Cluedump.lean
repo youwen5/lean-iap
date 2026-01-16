@@ -20,14 +20,14 @@ import LeanTeX
   -- Instead of telling you how cool Lean is, let's look at some cool Lean projects
   -- It can do things that no other language in existence can do
   \begin{itemize}
-    -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
-    \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
     -- Can do general-purpose programming in Lean, fast and no GC
     \item{"\\href{https://github.com/kmill/lean4-raytracer}{Raytracer}"}
-    -- Webdev using Lean!
-    \item{"\\href{https://codeberg.org/exozyme/ring3}{Webring generator}"}
+    -- Webdev using Lean! Plus, array bounds
+    \item{"\\href{https://codeberg.org/exozyme/ring3/src/branch/master/Main.lean}{Webring generator}"}
     -- Scripting language for Blender-like software
     \item{"\\href{https://github.com/lecopivo/HouLean}{HouLean}"}
+    -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
+    \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
     -- Dependently-typed tensor dimensions (Q: have you ever had a dimension mismatch?)
     \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
     -- If it compiles, it's most likely correct and bug-free (like in Rust)

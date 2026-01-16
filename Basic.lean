@@ -20,13 +20,33 @@ def a := 1
 #check a
 
 
-def gcd (a b : Nat) : Nat :=
+def f (x : ℕ) := x ^ 2
+
+#eval f 2
+
+
+def gcd (a b : ℕ) :=
   if b > 0 then gcd b (a % b) else a
 termination_by b
 decreasing_by
   exact Nat.mod_lt a ‹_›
 
 #loogle _ % _ < _
+
+
+#check ℕ
+
+#check Bool
+
+#check True
+
+#check False
+
+#check And
+
+#check Eq
+
+example : Eq (2 + 2) 4 := by rfl
 
 
 def my_add [Add α] (a b : α) := a + b

@@ -13,26 +13,29 @@ import LeanTeX
 #latex_slide do
   latex![| \titlepage |]
 
+-- Ask people if they've used Lean, proof assistants, functional programming, Rust
+-- TODO: More emphasis on Lean in slides
+
 #latex_slide "Cool Lean projects" do
   -- Instead of telling you how cool Lean is, let's look at some cool Lean projects
   -- It can do things that no other language in existence can do
   \begin{itemize}
-    -- Can do general-purpose programming in Lean, fast and no GC
-    \item{"\\href{https://github.com/kmill/lean4-raytracer}{Raytracer}"}
     -- Lean's metalanguage is just Lean, can make the video player run at compile time too!
     \item{"\\href{https://git.unnamed.website/leanime/tree/Leanime.lean}{Video player}"}
-    -- Machine-checked proofs
-    \item{"\\href{https://www.youtube.com/watch?v=jDTPBdxmxKw}{Rupert}"}
-    -- Dependently-typed tensor dimensions
-    \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
-    -- "Math at web scale"
-    \item{"\\href{https://teorth.github.io/equational_theories/paper.pdf}{Equational theories}"}
+    -- Can do general-purpose programming in Lean, fast and no GC
+    \item{"\\href{https://github.com/kmill/lean4-raytracer}{Raytracer}"}
     -- Webdev using Lean!
     \item{"\\href{https://codeberg.org/exozyme/ring3}{Webring generator}"}
-    -- If it compiles, it's most likely correct and bug-free
-    \item{"\\href{https://github.com/konne88/functorio}{Functorio}"}
     -- Scripting language for Blender-like software
     \item{"\\href{https://github.com/lecopivo/HouLean}{HouLean}"}
+    -- Dependently-typed tensor dimensions
+    \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
+    -- If it compiles, it's most likely correct and bug-free
+    \item{"\\href{https://github.com/konne88/functorio}{Functorio}"}
+    -- Machine-checked proofs
+    \item{"\\href{https://www.youtube.com/watch?v=jDTPBdxmxKw}{Rupert}"}
+    -- "Math at web scale"
+    \item{"\\href{https://teorth.github.io/equational_theories/paper.pdf}{Equational theories}"}
     -- This is how everyone will be doing math in 20 years (maybe), 250k theorems, "community-driven effort to digitize mathematics"
     \item{"\\href{https://eric-wieser.github.io/mathlib-import-graph/}{Mathlib}"}
     -- Useful for teaching, instant feedback
@@ -83,7 +86,7 @@ import LeanTeX
     \item{"2023: Lean 4 released, rewritten in Lean (except type checker)"} -- Type checker still in C++ for performance reasons
     \item{"Not named after the drug"} -- Allegedly the name is because it was supposed to be fast and minimal but it's not very minimal now
   \end{itemize}
-  -- Also, Leo LinkedIn stuff and his famous quote
+  -- Also, Leo LinkedIn stuff
 
 #latex_slide "Is Lean practical?" do
   \begin{itemize}

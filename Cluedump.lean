@@ -13,7 +13,7 @@ import LeanTeX
 #latex_slide do
   latex![| \titlepage |]
 
--- Ask people if they've used Lean, proof assistants, functional programming, Rust
+-- Ask people if they've used Lean, proof assistants, functional programming (Haskell etc), Rust
 -- TODO: More emphasis on Lean in slides
 
 #latex_slide "Cool Lean projects" do
@@ -28,9 +28,9 @@ import LeanTeX
     \item{"\\href{https://codeberg.org/exozyme/ring3}{Webring generator}"}
     -- Scripting language for Blender-like software
     \item{"\\href{https://github.com/lecopivo/HouLean}{HouLean}"}
-    -- Dependently-typed tensor dimensions
+    -- Dependently-typed tensor dimensions (Q: have you ever had a dimension mismatch?)
     \item{"\\href{https://lecopivo.github.io/scientific-computing-lean/Working-with-Arrays/Tensor-Operations/\\#Scientific-Computing-in-Lean--Working-with-Arrays--Tensor-Operations--Simple-Neural-Network}{SciLean}"}
-    -- If it compiles, it's most likely correct and bug-free
+    -- If it compiles, it's most likely correct and bug-free (like in Rust)
     \item{"\\href{https://github.com/konne88/functorio}{Functorio}"}
     -- Machine-checked proofs
     \item{"\\href{https://www.youtube.com/watch?v=jDTPBdxmxKw}{Rupert}"}
@@ -60,19 +60,20 @@ import LeanTeX
 
 #latex_slide "History (cont.)" do
   \begin{itemize}
-    \item{"1976: Four color theorem proved using brute force (verified in Rocq in 2005)"} -- AKA Coq
+    \item{"1976: Four color theorem proved using brute force (verified in Coq in 2005)"} -- AKA Rocq
     -- People were upset because proofs are about understanding, not correctness
+    \item{"1989: Coq (Rocq) released"} -- FRAP
   \end{itemize}
 
 #latex_slide "ITPs vs ATPs" do
   \begin{itemize}
     \item{"Two main paradigms"}
     \item{"ITP = Interactive theorem prover, uses tactics, ex: Rocq, Lean"} -- Rocq used by FRAP
-    \item{"ATP = Automated ..., uses SMT, ex: Dafny"} -- Dafny used by Verified SWE class
-    \item{"ATPs are buggier, more brittle, require learning arcane SMT magic"}
+    \item{"ATP = Automated ..., uses SMT, ex: Dafny"} -- Dafny used by Verified SWE class, basically really fancy SAT solvers
+    -- ATPs buggier, more brittle, require learning arcane SMT magic since SMT solver is black box, easier to write but harder to debug proofs
   \end{itemize}
 
-#latex_slide "Foundations" do
+#latex_slide "ITP foundations" do
   \begin{itemize}
     \item{"Set theory (Mizar, Metamath)"}
     \item{"Simple type theory (Isabelle/HOL)"}
@@ -82,17 +83,27 @@ import LeanTeX
 
 #latex_slide "Lean bio" do
   \begin{itemize}
-    \item{"2013: Created by Leo de Moura at Microsoft, previously created Z3"}
+    \item{"2013: Created by Leo de Moura at Microsoft, previously created Z3"} -- Core devs now at AWS, maybe not using enough Lean since AWS went down last semester
+    -- Also, Leo LinkedIn stuff, he read my blog post
     \item{"2023: Lean 4 released, rewritten in Lean (except type checker)"} -- Type checker still in C++ for performance reasons
     \item{"Not named after the drug"} -- Allegedly the name is because it was supposed to be fast and minimal but it's not very minimal now
   \end{itemize}
-  -- Also, Leo LinkedIn stuff
 
-#latex_slide "Is Lean practical?" do
+#latex_slide "Why Lean?" do
+  \begin{itemize}
+    \item{"Most popular proof assistant"}
+    \item{"Mathlib"}
+    \item{"Automation (grind, etc)"} -- Talked with a Lean FRO guy who did theorem proving for arithmetic back during a summer in 90s and he said everything he did has been obsoleted by grind
+    \item{"AI: \\href{https://aristotle.harmonic.fun/}{Harmonic's Aristotle}, AlphaProof"}
+    \item{"Fun!"}
+  \end{itemize}
+
+#latex_slide "Challenges" do
   \begin{itemize}
     \item{"\"Invisible math\" \\includegraphics[scale=0.5]{Vesica_piscis_circles.png}"}
-    \item{"Automated tactics: grind, hammer, canonical"}
-    \item{"AI: \\href{https://aristotle.harmonic.fun/}{Harmonic's Aristotle}, AlphaProof"}
+    \item{"Terry Tao: Writing Lean is 10x more time than conventional proofs"}
+    \item{"Not many programming libraries"}
+    \item{"Hard to learn"}
   \end{itemize}
 
 -- #latex_slide "Why Lean?" do

@@ -1,3 +1,4 @@
+import Std
 import Mathlib
 
 -- This is a comment
@@ -34,6 +35,25 @@ decreasing_by
 #loogle _ % _ < _
 
 
+structure Cluedump where
+  title : String
+  presenter : String
+  room : String
+  time : Std.Time.ZonedDateTime
+
+def LeanCluedump1 : Cluedump := {
+  title := "Lean Part 1"
+  presenter := "xy"
+  room := "3-370"
+  time := zoned("2026-01-16T18:00:00-05:00")
+}
+
+#eval LeanCluedump1.room
+
+def LeanCluedump2 := Cluedump.mk "Lean Part 2" "xy" "3-370" zoned("2026-01-20T18:00:00-05:00")
+
+def LeanCluedump3 : Cluedump := ⟨"Lean Part 3", "xy", "3-370", zoned("2026-01-23T18:00:00-05:00")⟩
+
 #check ℕ
 
 #check Bool
@@ -47,6 +67,27 @@ decreasing_by
 #check Eq
 
 example : Eq (2 + 2) 4 := by rfl
+
+#check Option
+
+-- Same thing as Option
+inductive Maybe (α : Type)
+  | none
+  | some (val : α)
+
+-- GADT syntax
+inductive Maybe' (α : Type)
+  | none
+  | some : α → Maybe' α
+
+def Maybe.check_if_none (x : Maybe α) :=
+  match x with
+  | none => "Nothing"
+  | some _ => "Something"
+
+def Maybe.check_if_none' : Maybe α → String
+  | none => "Nothing"
+  | some _ => "Something"
 
 
 def my_add [Add α] (a b : α) := a + b
@@ -67,8 +108,74 @@ def DiabolicalSort [LinearOrder α] (A : List α) :=
   WorstSort A (fun n ↦ ack n n)
 
 
+-- Symmetric difference and intersection form a commutative ring on a power set
+open symmDiff
+
+instance : Add (Set α) := ⟨(· ∆ ·)⟩
+
+@[simp]
+lemma add_def {a b : Set α} : a + b = a ∆ b := rfl
+
+instance : Zero (Set α) := ⟨∅⟩
+
+@[simp]
+lemma zero_def : (0 : Set α) = ∅ := rfl
+
+instance : Neg (Set α) := ⟨id⟩
+
+@[simp]
+lemma neg_def {a : Set α} : -a = a := rfl
+
+instance : Mul (Set α) := ⟨(· ∩ ·)⟩
+
+@[simp]
+lemma mul_def {a b : Set α} : a * b = a ∩ b := rfl
+
+instance : One (Set α) := ⟨.univ⟩
+
+@[simp]
+lemma one_def : (1 : Set α) = .univ := rfl
+
+example : CommRing (Set α) where
+  add_assoc := by
+    simp only [add_def]
+    grind
+  zero_add := by simp
+  add_zero := by simp
+  nsmul := nsmulRec
+  zsmul := zsmulRec
+  neg_add_cancel := by simp
+  add_comm := by
+    simp only [add_def]
+    grind
+  left_distrib a b c := by
+    ext x
+    simp [symmDiff_def]
+    grind
+  right_distrib a b c := by
+    ext x
+    simp [symmDiff_def]
+    grind
+  zero_mul := by simp
+  mul_zero := by simp
+  mul_assoc := by
+    simp only [mul_def]
+    grind
+  one_mul := by simp
+  mul_one := by simp
+  mul_comm := by
+    simp only [mul_def]
+    grind
+
+
 -- Warm fuzzy things
 namespace Monad
+
+#check List.map
+
+#check Option.map
+
+#check Except.map
 
 class Functor' (f : Type → Type) where
   map : (α → β) → f α → f β
@@ -155,104 +262,9 @@ instance : LawfulMonad' List where
 end Monad
 
 
-open symmDiff
+-- https://slightknack.dev/blog/do-notation/
 
-instance : Add (Set α) := ⟨(· ∆ ·)⟩
-
-@[simp]
-lemma add_def {a b : Set α} : a + b = a ∆ b := rfl
-
-instance : Zero (Set α) := ⟨∅⟩
-
-@[simp]
-lemma zero_def : (0 : Set α) = ∅ := rfl
-
-instance : Neg (Set α) := ⟨id⟩
-
-@[simp]
-lemma neg_def {a : Set α} : -a = a := rfl
-
-instance : Mul (Set α) := ⟨(· ∩ ·)⟩
-
-@[simp]
-lemma mul_def {a b : Set α} : a * b = a ∩ b := rfl
-
-instance : One (Set α) := ⟨.univ⟩
-
-@[simp]
-lemma one_def : (1 : Set α) = .univ := rfl
-
-example : CommRing (Set α) where
-  add_assoc := by
-    simp only [add_def]
-    grind
-  zero_add := by simp
-  add_zero := by simp
-  nsmul := nsmulRec
-  zsmul := zsmulRec
-  neg_add_cancel := by simp
-  add_comm := by
-    simp only [add_def]
-    grind
-  left_distrib a b c := by
-    ext x
-    simp [symmDiff_def]
-    grind
-  right_distrib a b c := by
-    ext x
-    simp [symmDiff_def]
-    grind
-  zero_mul := by simp
-  mul_zero := by simp
-  mul_assoc := by
-    simp only [mul_def]
-    grind
-  one_mul := by simp
-  mul_one := by simp
-  mul_comm := by
-    simp only [mul_def]
-    grind
-
-
-namespace Sorting
-
-variable [LE α] [DecidableLE α] [Std.IsLinearOrder α] [BEq α] [LawfulBEq α] (xs : List α)
-
-@[grind]
-def insert (a : α)
-  | [] => [a]
-  | x :: xs =>
-    if a ≤ x then
-      a :: x :: xs
-    else
-      x :: insert a xs
-
-@[grind]
-def insertionSort : List α → List α
-  | [] => []
-  | x :: xs => insert x (insertionSort xs)
-
-@[grind]
-def Sorted : List α → Prop
-  | [] | [_] => True
-  | x :: x' :: xs => x ≤ x' ∧ Sorted (x' :: xs)
-/-
-This also works:
-inductive Sorted : List α → Prop where
-  | nil : Sorted []
-  | single x : Sorted [x]
-  | cons_cons x x' xs : x ≤ x' → Sorted (x' :: xs) → Sorted (x :: x' :: xs)
--/
-
-theorem insertCorrect x : (Sorted xs → Sorted (insert x xs)) ∧ (x :: xs).Perm (insert x xs) := by
-  induction xs with
-  | nil => grind
-  | cons _ t => cases t <;> grind
-
-theorem insertionSortCorrect : Sorted (insertionSort xs) ∧ xs.Perm (insertionSort xs) := by
-  induction xs with
-  | nil => grind
-  | cons h t => grind [insertCorrect (insertionSort t) h]
+-- See Main.lean
 
 
 def ICan'tBelieveItCanSort [LinearOrder α] (A : Array α) := Id.run do
@@ -264,9 +276,8 @@ def ICan'tBelieveItCanSort [LinearOrder α] (A : Array α) := Id.run do
         A := A.swap i j
   return A.toArray
 
-end Sorting
 
--- Local imperativity: https://dl.acm.org/doi/10.1145/3547640
+-- Local imperativity https://dl.acm.org/doi/10.1145/3547640
 def kadane (A : Array ℤ) := Id.run do
   let mut cur := 0
   let mut ans := 0

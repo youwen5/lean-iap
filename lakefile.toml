@@ -1,12 +1,16 @@
 name = "lean-iap"
 version = "0.1.0"
-defaultTargets = ["lean-iap"]
+defaultTargets = ["main"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 
 [[lean_lib]]
 name = "Cluedump"
+
+[[lean_exe]]
+name = "main"
+root = "Main"
 
 [[require]]
 name = "mathlib"

@@ -26,6 +26,11 @@ def f (x : ℕ) := x ^ 2
 #eval f 2
 
 
+def fact
+  | 0 => 0
+  | n + 1 => (n + 1) * fact n
+
+
 def gcd (a b : ℕ) :=
   if b > 0 then gcd b (a % b) else a
 termination_by b
@@ -33,6 +38,30 @@ decreasing_by
   exact Nat.mod_lt a ‹_›
 
 #loogle _ % _ < _
+
+
+-- theorem is the same as def
+theorem fst_of_two_props (a b : Prop) : a → b → a :=
+  fun x _ ↦ x
+
+#print fst_of_two_props
+
+theorem fst_of_two_props' (a b : Prop) : a → b → a := by
+  intro ha hb
+  exact ha
+
+#print fst_of_two_props'
+
+
+theorem nng_theorem (h : x + y = 7) : 2 * (x + y) = 14 := by
+  rw [h]
+
+#print nng_theorem
+
+theorem nng_theorem' (h : x + y = 7) : 2 * (x + y) = 14 := by
+  grind
+
+#print nng_theorem'._proof_1_1
 
 
 structure Cluedump where
@@ -97,15 +126,33 @@ def my_add [Add α] (a b : α) := a + b
 #synth Add Float
 
 
-def BadSort [LinearOrder α] (A : List α)
-  | 0 => A.insertionSort (· ≤ ·)
-  | Nat.succ n => BadSort A.permutations n |>.headD []
+abbrev le (a b : (ℕ × String)) := a.1 < b.1 ∨ (a.1 = b.1 ∧ a.2 ≤ b.2)
 
-def WorstSort [LinearOrder α] (A : List α) (f : ℕ → ℕ) :=
-  BadSort A <| f A.length
+instance : LE (ℕ × String) := ⟨le⟩
 
-def DiabolicalSort [LinearOrder α] (A : List α) :=
-  WorstSort A (fun n ↦ ack n n)
+#synth LE (ℕ × String)
+
+-- instance : LT (ℕ × String) := ⟨fun a b => a ≤ b ∧ ¬b ≤ a⟩
+
+-- #synth LT (ℕ × String)
+
+attribute [-instance] Prod.instPreorder Prod.instPartialOrder Prod.instMin_mathlib Prod.instMax_mathlib Prod.instLattice Prod.instDistribLattice Prod.instSemilatticeInf Prod.instSemilatticeSup
+
+-- #synth SemilatticeInf (ℕ × String)
+
+-- #synth Min (ℕ × String)
+
+-- #synth Preorder (ℕ × String)
+
+@[grind]
+lemma le_def {a b : (ℕ × String)} : a ≤ b ↔ le a b := .rfl
+
+instance : LinearOrder (ℕ × String) where
+  le_refl := by grind
+  le_trans := by grind
+  le_antisymm := by grind
+  le_total := by grind
+  toDecidableLE a b := inferInstanceAs <| Decidable <| le a b
 
 
 -- Symmetric difference and intersection form a commutative ring on a power set
@@ -287,6 +334,14 @@ def kadane (A : Array ℤ) := Id.run do
   return ans
 
 
+def UpToN (xs : List ℕ) : List ℕ := do
+  let x ← xs
+  let y ← List.range x
+  return y
+
+#eval UpToN [1, 2, 3]
+
+
 -- This example is from the Lean homepage
 
 /-- A prime is a number larger than 1 with no trivial divisors -/
@@ -337,3 +392,9 @@ theorem InfinitudeOfPrimes : ∀ n, ∃ p > n, IsPrime p := by
   grind [Nat.add_sub_cancel_left, Nat.dvd_one]
 
 #print InfinitudeOfPrimes
+
+theorem succ_odd_is_even {n : ℕ} (h : Odd n) : Even n.succ := by
+  obtain ⟨k, h⟩ := h
+  use k + 1
+  rw [h, Nat.succ_eq_add_one]
+  ring

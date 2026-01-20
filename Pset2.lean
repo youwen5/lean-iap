@@ -9,17 +9,22 @@ Prove the following lemmas in Lean.
 -/
 
 lemma two_plus_two : 2 + 2 = 4 := by
-  sorry
+  simp
 
 lemma and_swap : p ∧ q → q ∧ p := by
-  sorry
+  intro h
+  rw [and_comm] at h
+  exact h
 
 lemma add_rearrange {a b c d : ℝ} : 0 ≤ a + b + c + d ↔ -b - c ≤ a + d := by
-  sorry
+  grind
+
 
 lemma three_not_even {x : ℤ} : 2 * x ≠ 3 := by
-  sorry
-
+  intro h
+  apply_fun (· % 2) at h
+  simp at h
+  
 lemma linear_arithmetic {a b c d e f : ℝ} :
     2 * a + b ≥ 1 →
     b ≥ 0 → c ≥ 0 → d ≥ 0 → e * f ≥ 0 →
@@ -27,13 +32,13 @@ lemma linear_arithmetic {a b c d e f : ℝ} :
     c ≥ 6 * e * f → d - f * e * 5 ≥ 0 →
     a + b + 3 * c + d + 2 * e * f < 0 →
     False := by
-  sorry
+  grind
 
 lemma cross_multiply_field [Field α] {x y z w : α} :
     x / y = z / w →
     y ≠ 0 → w ≠ 0 →
     x * w = z * y := by
-  sorry
+  grind
 
 abbrev SolutionSet (y : ℝ) : Set (ℝ × ℝ × ℝ × ℝ × ℝ) :=
  {(x₁, x₂, x₃, x₄, x₅) |
@@ -52,7 +57,7 @@ lemma imo1963_p4 : (x₁, x₂, x₃, x₄, x₅) ∈ SolutionSet y ↔
      x₂ + x₄ = y * x₃ ∧
      x₃ + x₅ = y * x₄ ∧
      x₄ + x₁ = y * x₅) := by
-  sorry
+  grind
 
 /-
 ## 2.2
@@ -61,13 +66,18 @@ Prove the following lemmas.
 -/
 
 lemma pow_two_larger : n ≤ 2 ^ n := by
-  sorry
+  induction n <;> grind
 
 lemma pow_two_larger' (h : 2 ≤ n) : (n - 2) * 2 ≤ 2 ^ (n - 1) := by
-  sorry
+  let x := n - 2
+  have ah : n = x + 2 := by grind
+  rw [ah]
+  simp
+  suffices 2^x >= x by
+    grind
+  exact pow_two_larger
 
-/-
-## 2.3
+/- ## 2.3
 
 Prove these lemmas about binary operations (taken from https://cjquines.com/files/binaryoperations.pdf).
 -/

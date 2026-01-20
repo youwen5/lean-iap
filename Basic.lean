@@ -20,15 +20,9 @@ def a := 1
 -- Get type of `a`
 #check a
 
-
 def f (x : ℕ) := x ^ 2
 
 #eval f 2
-
-
-def fact
-  | 0 => 0
-  | n + 1 => (n + 1) * fact n
 
 
 def gcd (a b : ℕ) :=
@@ -342,59 +336,97 @@ def UpToN (xs : List ℕ) : List ℕ := do
 #eval UpToN [1, 2, 3]
 
 
--- This example is from the Lean homepage
+-- Random exercises from MIL
 
-/-- A prime is a number larger than 1 with no trivial divisors -/
-def IsPrime (n : Nat) := 1 < n ∧ ∀ k, 1 < k → k < n → ¬ k ∣ n
+example (a b c : ℝ) : c * b * a = b * (a * c) := by
+  sorry
 
-/-- Every number larger than 1 has a prime factor -/
-theorem exists_prime_factor :
-    ∀ n, 1 < n → ∃ k, IsPrime k ∧ k ∣ n := by
-  intro n h1
-  -- Either `n` is prime...
-  by_cases hprime : IsPrime n
-  · grind [Nat.dvd_refl]
-  -- ... or it has a non-trivial divisor with a prime factor
-  · obtain ⟨k, _⟩ : ∃ k, 1 < k ∧ k < n ∧ k ∣ n := by
-      simp_all [IsPrime]
-    obtain ⟨p, _, _⟩ := exists_prime_factor k (by grind)
-    grind [Nat.dvd_trans]
+example (a b c d e f : ℝ) (h : a * b = c * d) (h' : e = f) : a * (b * e) = c * (d * f) := by
+  sorry
 
-/-- The factorial, defined recursively, with custom notation -/
-def factorial : Nat → Nat
-  | 0 => 1
-  | n+1 => (n + 1) * factorial n
-notation:10000 n "!" => factorial n
+example : (a + b) * (c + d) = a * c + a * d + b * c + b * d := by
+  sorry
 
-/-- The factorial is always positive -/
-theorem factorial_pos : ∀ n, 0 < n ! := by
-  intro n; induction n <;> grind [factorial]
+example (a b c : ℕ) (h : a + b = c) : (a + b) * (a + b) = a * c + b * c := by
+  sorry
 
-/-- ... and divided by its constituent factors -/
-theorem dvd_factorial : ∀ n, ∀ k ≤ n, 0 < k → k ∣ n ! := by
-  intro n; induction n <;>
-    grind [Nat.dvd_mul_right, Nat.dvd_mul_left_of_dvd, factorial]
+example [Ring R] (a b : R) : a + b + -b = a := by
+  sorry
 
-/--
-We show that we find arbitrary large (and thus infinitely
-many) prime numbers, by picking an arbitrary number `n`
-and showing that `n! + 1` has a prime factor larger than `n`.
--/
-theorem InfinitudeOfPrimes : ∀ n, ∃ p > n, IsPrime p := by
-  intro n
-  have : 1 < n ! + 1 := by grind [factorial_pos]
-  obtain ⟨p, hp, _⟩ := exists_prime_factor (n ! + 1) this
-  suffices ¬p ≤ n by grind
-  intro (_ : p ≤ n)
-  have : 1 < p := hp.1
-  have : p ∣ n ! := dvd_factorial n p ‹p ≤ n› (by grind)
-  have := Nat.dvd_sub ‹p ∣ n ! + 1› ‹p ∣ n !›
-  grind [Nat.add_sub_cancel_left, Nat.dvd_one]
+example (x y z : ℝ) (h₀ : x ≤ y) (h₁ : y ≤ z) : x ≤ z := by
+  sorry
 
-#print InfinitudeOfPrimes
+example (h : 2 * a ≤ 3 * b) (h' : 1 ≤ a) (h'' : d = 2) : d + a ≤ 5 * b := by
+  sorry
 
-theorem succ_odd_is_even {n : ℕ} (h : Odd n) : Even n.succ := by
-  obtain ⟨k, h⟩ := h
-  use k + 1
-  rw [h, Nat.succ_eq_add_one]
-  ring
+example (a b c d e : ℝ) (h₀ : a ≤ b) (h₁ : c < d) : a + Real.exp c + e < b + Real.exp d + e := by
+  sorry
+
+example (h : a ≤ b) : Real.log (1 + Real.exp a) ≤ Real.log (1 + Real.exp b) := by
+  sorry
+
+example : 0 ≤ a ^ 2 := by
+  sorry
+
+example (a b : ℝ) : |a*b| ≤ (a^2 + b^2)/2 := by
+  sorry
+
+example : min a b = min b a := by
+  sorry
+
+example : Nat.gcd m n = Nat.gcd n m := by
+  sorry
+
+example (h : a ≤ b) : 0 ≤ b - a := by
+  sorry
+
+example : ∀ x y ε : ℝ, 0 < ε → ε ≤ 1 → |x| < ε → |y| < ε → |x * y| < ε := by
+  sorry
+
+example {n : ℕ} (h : Odd n) : Even n.succ := by
+  sorry
+
+example : ∃ x : ℝ, 2 < x ∧ x < 3 := by
+  sorry
+
+def SumOfSquares [CommRing α] (x : α) := ∃ a b, x = a ^ 2 + b ^ 2
+
+example [CommRing α] {x y : α} (sosx : SumOfSquares x) (sosy : SumOfSquares y) : SumOfSquares (x * y) := by
+  sorry
+
+open Function in
+example {g : β → γ} {f : α → β} (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
+  sorry
+
+example (P : α → Prop) (h : ¬∀ x, P x) : ∃ x, ¬P x := by
+  sorry
+
+example {x y : ℝ} (h₀ : x ≤ y) (h₁ : ¬y ≤ x) : x ≤ y ∧ x ≠ y := by
+  sorry
+
+example : ∃ m n : ℕ, 4 < m ∧ m < n ∧ n < 10 ∧ Nat.Prime m ∧ Nat.Prime n := by
+  sorry
+
+example {x y : ℝ} (h : x ^ 2 + y ^ 2 = 0) : x = 0 := by
+  sorry
+
+example (x : ℝ) : |x + 3| < 5 → -8 < x ∧ x < 2 := by
+  sorry
+
+example (h : y > x ^ 2) : y > 0 ∨ y < -1 := by
+  sorry
+
+example (h : x ^ 2 = y ^ 2) : x = y ∨ x = -y := by
+  sorry
+
+example {m n k : ℕ} (h : m ∣ n ∨ m ∣ k) : m ∣ n * k := by
+  sorry
+
+example : ∀ f : α → Set α, ¬Function.Surjective f := by
+  sorry
+
+example (n : ℕ) : ∑ i ∈ Finset.range (n + 1), i ^ 2 = n * (n + 1) * (2 * n + 1) / 6 := by
+  sorry
+
+example : ∀ n, ∃ p > n, Nat.Prime p := by
+  sorry

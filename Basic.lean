@@ -430,3 +430,41 @@ example (n : ℕ) : ∑ i ∈ Finset.range (n + 1), i ^ 2 = n * (n + 1) * (2 * n
 
 example : ∀ n, ∃ p > n, Nat.Prime p := by
   sorry
+
+-- Exercises from TPIL and other random sources
+
+namespace TPIL
+
+variable (men : Type) (barber : men)
+variable (shaves : men → men → Prop)
+
+example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False :=
+  sorry
+
+end TPIL
+
+namespace InsertionSort
+
+variable [LinearOrder α] (xs : List α)
+
+def ins (a : α)
+  | [] => [a]
+  | x :: xs =>
+    if a ≤ x then a :: x :: xs else x :: ins a xs
+
+def insSort : List α → List α
+  | [] => []
+  | x :: xs => ins x (insSort xs)
+
+inductive Sorted : List α → Prop where
+  | nil : Sorted []
+  | single x : Sorted [x]
+  | cons_cons x x' xs : x ≤ x' → Sorted (x' :: xs) → Sorted (x :: x' :: xs)
+
+theorem insertCorrect x : (Sorted xs → Sorted (ins x xs)) ∧ (x :: xs).Perm (ins x xs) := by
+  sorry
+
+theorem insertionSortCorrect : Sorted (insSort xs) ∧ xs.Perm (insSort xs) := by
+  sorry
+
+end InsertionSort

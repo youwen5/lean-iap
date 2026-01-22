@@ -19,7 +19,6 @@ lemma and_swap : p ∧ q → q ∧ p := by
 lemma add_rearrange {a b c d : ℝ} : 0 ≤ a + b + c + d ↔ -b - c ≤ a + d := by
   grind
 
-
 lemma three_not_even {x : ℤ} : 2 * x ≠ 3 := by
   intro h
   apply_fun (· % 2) at h
@@ -70,28 +69,64 @@ lemma pow_two_larger : n ≤ 2 ^ n := by
 
 lemma pow_two_larger' (h : 2 ≤ n) : (n - 2) * 2 ≤ 2 ^ (n - 1) := by
   let x := n - 2
-  have ah : n = x + 2 := by grind
-  rw [ah]
+  have : 0 <= x := by positivity
+  have : n = x + 2 := by grind
+  rw [this]
   simp
-  suffices 2^x >= x by
-    grind
-  exact pow_two_larger
+  suffices x <= 2^x by grind
+  apply pow_two_larger
 
-/- ## 2.3
 
-Prove these lemmas about binary operations (taken from https://cjquines.com/files/binaryoperations.pdf).
+/-
+## 2.3
+
+Prove these lemmas about binary operations (taken from https//cjquines.com/files/binaryoperations.pdf).
 -/
 
 lemma cjq1 (f : α → α → α) (hl : ∀ x, f l x = x) (hr : ∀ x, f x r = x) : l = r := by
-  sorry
+  have : f l r = l := by grind
+  grind
 
 lemma cjq2 (f : α → α → α) (h : ∀ x y, ∃ z, f x z = y ∧ ∀ z', f x z = f x z' → z = z')
     : ∃ g : α → α → α, ∀ x y, f x (g x y) = y ∧ g x (f x y) = y := by
-  sorry
+  use fun x y => Classical.choose (h x y)
+  grind
 
 lemma cjq3 (f g : α → α → α) (hid : ∀ x, f i x = x ∧ f x i = x ∧ g j x = x ∧ g x j = x)
     (h : ∀ x y z w, f (g x y) (g z w) = g (f x z) (f y w)) : f = g := by
-  sorry
+  have : i = j := by
+    suffices f (g i j) (g j i) = i by grind
+    grind
+  suffices ∀ x y, g (f x i) (f i y) = g x y by grind
+  grind
+
+lemma cjq3' (f g : α → α → α) (hid : ∀ x, f i₁ x = x ∧ f x i₂ = x ∧ g j₁ x = x ∧ g x j₂ = x)
+    (h : ∀ x y z w, f (g x y) (g z w) = g (f x z) (f y w)) : f = g := by
+  have : i₁ = i₂ := by
+    cases hid i₁
+    grind
+  have : j₁ = j₂ := by
+    cases hid i₁
+    grind
+  let i := i₁
+  let j := j₁
+  have : i = j := by
+    suffices f (g i j) (g j i) = i by grind
+    grind
+  suffices ∀ x y, g (f x i) (f i y) = g x y by grind
+  grind
+
+example (x : ℤ) : x % 2 != 0 ↔ ∃ k, x = 2 * k + 1 := by
+  constructor
+  · let d := x % 2
+    intro h
+    have : d == 1 := by
+      grind
+    let q := (x - 1) / 2
+    use q
+    have : x = 2 * q + 1 := by grind
+    grind
+  · grind
 
 /-
 ## 2.4

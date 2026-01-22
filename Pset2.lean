@@ -75,7 +75,7 @@ Prove these lemmas about binary operations (taken from https://cjquines.com/file
 lemma cjq1 (f : α → α → α) (hl : ∀ x, f l x = x) (hr : ∀ x, f x r = x) : l = r := by
   sorry
 
-lemma cjq2 [Nonempty α] (f : α → α → α) (h : ∀ x y, ∃ z, f x z = y ∧ ∀ z', f x z = f x z' → z = z')
+lemma cjq2 (f : α → α → α) (h : ∀ x y, ∃ z, f x z = y ∧ ∀ z', f x z = f x z' → z = z')
     : ∃ g : α → α → α, ∀ x y, f x (g x y) = y ∧ g x (f x y) = y := by
   sorry
 

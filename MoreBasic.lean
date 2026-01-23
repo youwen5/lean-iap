@@ -1,6 +1,8 @@
 import Mathlib
 
 
+-- Review type classes (very different from classes in OOP!)
+
 -- Warm fuzzy things
 namespace Monad
 
@@ -45,14 +47,14 @@ instance : LawfulFunctor' Option where
 
 @[simp]
 instance (α : Type) : Functor' (α → ·) where
-  map f g := fun x ↦ f <| g x
+  map f g := f ∘ g
 
 instance (α : Type) : LawfulFunctor' (α → ·) where
   id_map := by simp
-  comp_map := by simp
+  comp_map := by simp [Function.comp_assoc]
+
 
 #simp (some 3).map (· * ·)
-
 
 class Applicative' f extends Functor' f where
   pure : α → f α
@@ -70,7 +72,7 @@ class LawfulApplicative' f [Applicative' f] extends LawfulFunctor' f where
     repeat rw [← pure_seq]
     simp [seq_assoc, map_pure, seq_pure])
 
-#eval (some 3).map (· * ·) <*> (some 4)
+#eval ((· * ·) <$> (Except.ok 3) <*> (Except.ok 4) : Except String ℕ)
 
 @[simp]
 instance (α : Type) : Applicative' (α → ·) where
@@ -78,9 +80,9 @@ instance (α : Type) : Applicative' (α → ·) where
   seq f g := fun x ↦ f x (g x)
 
 instance (α : Type) : LawfulApplicative' (α → ·) where
-  pure_seq := by simp
-  map_pure := by simp
-  seq_pure := by simp
+  pure_seq := by simp; grind
+  map_pure := by simp; grind
+  seq_pure := by simp; grind
   seq_assoc := by simp
 
 
@@ -114,6 +116,16 @@ class LawfulMonad' m [Monad' m] extends LawfulApplicative' m where
   seq_assoc x g h := (by simp [← bind_pure_comp, ← bind_map, bind_assoc, pure_bind])
 
 @[simp]
+instance (α : Type) : Monad' (α → ·) where
+  bind f g := fun x ↦ g (f x) x
+
+instance (α : Type) : LawfulMonad' (α → ·) where
+  bind_pure_comp := by simp; grind
+  bind_map := by simp
+  pure_bind := by simp
+  bind_assoc := by simp
+
+@[simp]
 instance : Monad' Option where
   pure x := .some x
   bind x f := match x with
@@ -131,7 +143,6 @@ instance : LawfulMonad' Option where
   bind_assoc := by
     simp
     grind
-
 
 @[simp]
 instance : Monad' List where

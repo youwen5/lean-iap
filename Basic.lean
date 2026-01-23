@@ -336,7 +336,6 @@ def UpToN (xs : List ℕ) : List ℕ := do
 
 #eval UpToN [1, 2, 3]
 
-
 -- Random exercises from MIL
 
 example (a b c : ℝ) : c * b * a = b * (a * c) := by
@@ -445,16 +444,25 @@ example [CommRing α] {x y : α} (sosx : SumOfSquares x) (sosy : SumOfSquares y)
 
 open Function in
 example {g : β → γ} {f : α → β} (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
-  sorry
+  unfold Surjective
+  unfold Surjective at surjg surjf
+  intro c
+  let ⟨b, hb⟩ := surjg c
+  let ⟨c, hc⟩ := surjf b
+  use c
+  grind
 
 example (P : α → Prop) (h : ¬∀ x, P x) : ∃ x, ¬P x := by
-  sorry
+  grind
 
 example {x y : ℝ} (h₀ : x ≤ y) (h₁ : ¬y ≤ x) : x ≤ y ∧ x ≠ y := by
-  sorry
+  grind
 
 example : ∃ m n : ℕ, 4 < m ∧ m < n ∧ n < 10 ∧ Nat.Prime m ∧ Nat.Prime n := by
-  sorry
+  use 5,7
+  have : Nat.Prime 5 := by norm_num
+  have : Nat.Prime 7 := by norm_num
+  grind
 
 example {x y : ℝ} (h : x ^ 2 + y ^ 2 = 0) : x = 0 := by
   sorry

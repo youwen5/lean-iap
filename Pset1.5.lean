@@ -3,85 +3,149 @@ import Mathlib
 -- Random exercises from MIL
 
 example (a b c : ℝ) : c * b * a = b * (a * c) := by
-  sorry
+  grind
 
 example (a b c d e f : ℝ) (h : a * b = c * d) (h' : e = f) : a * (b * e) = c * (d * f) := by
-  sorry
+  grind
 
 example (a b c d : ℝ) : (a + b) * (c + d) = a * c + a * d + b * c + b * d := by
-  sorry
+  grind
 
 example (a b c : ℕ) (h : a + b = c) : (a + b) * (a + b) = a * c + b * c := by
-  sorry
+  grind
 
 example (a b : ℤ) : a + b + -b = a := by
-  sorry
+  grind
 
 example (x y z : ℝ) (h₀ : x ≤ y) (h₁ : y ≤ z) : x ≤ z := by
-  sorry
+  grind
 
 example (h : 2 * a ≤ 3 * b) (h' : 1 ≤ a) (h'' : d = 2) : d + a ≤ 5 * b := by
-  sorry
+  grind
 
 example (a b c d e : ℝ) (h₀ : a ≤ b) (h₁ : c < d) : a + Real.exp c + e < b + Real.exp d + e := by
-  sorry
+  apply Real.exp_lt_exp.mpr at h₁
+  grind
 
 example (a b : ℝ) (h : a ≤ b) : Real.log (1 + Real.exp a) ≤ Real.log (1 + Real.exp b) := by
-  sorry
+  apply Real.exp_le_exp.mpr at h
+  have : 1 + Real.exp a <= 1 + Real.exp b := by linarith
+  apply Real.log_le_log at this
+  . grind
+  . positivity
 
 example : 0 ≤ a ^ 2 := by
-  sorry
+  grind
 
 example (a b : ℝ) : |a*b| ≤ (a^2 + b^2)/2 := by
-  sorry
+  by_cases 0 <= a * b
+  · suffices 0 <= (a - b)^2 by grind
+    positivity
+  · suffices 0 <= (a + b)^2 by grind
+    positivity
 
 example (a b : ℝ) : min a b = min b a := by
-  sorry
+  grind
 
 example : Nat.gcd m n = Nat.gcd n m := by
-  sorry
+  grind
 
 example (h : a ≤ b) : 0 ≤ b - a := by
-  sorry
+  grind
 
 example : ∀ x y ε : ℝ, 0 < ε → ε ≤ 1 → |x| < ε → |y| < ε → |x * y| < ε := by
-  sorry
+  intro x y ε ha hb hc hd
+  by_cases 0 <= x * y
+  · have : x * y <= |x| * |y| := by
+      by_cases 0 <= y
+      · grind [mul_le_mul]
+      · have : x <= 0 := by
+          by_contra h
+          have : x * y < 0 := by grind [mul_neg_of_pos_of_neg]
+          grind
+        have : |x| * |y| = -x * -y := by grind
+        grind
+    have : ε^2 <= ε := by grind [sq_le]
+    have : |x| * |y| < ε * ε := by
+      grind [mul_lt_mul']
+    grind
+  · let x' := -x
+    have : x' * y <= |x'| * |y| := by
+      have : 0 <= x' * y := by grind
+      by_cases 0 <= y
+      · grind [mul_le_mul]
+      · have : x' <= 0 := by
+          by_contra h
+          have : x' * y < 0 := by grind [mul_neg_of_pos_of_neg]
+          grind 
+        have : |x'| * |y| = -x' * -y := by grind
+        grind
+    have : ε^2 <= ε := by grind [sq_le]
+    have : |x'| * |y| < ε * ε := by
+      grind [mul_lt_mul']
+    grind
 
 example {n : ℕ} (h : Odd n) : Even n.succ := by
-  sorry
+  grind
 
 example : ∃ x : ℝ, 2 < x ∧ x < 3 := by
-  sorry
+  use 2.5
+  grind
 
 def SumOfSquares [CommRing α] (x : α) := ∃ a b, x = a ^ 2 + b ^ 2
 
+
 example [CommRing α] {x y : α} (sosx : SumOfSquares x) (sosy : SumOfSquares y) : SumOfSquares (x * y) := by
-  sorry
+  unfold SumOfSquares
+  unfold SumOfSquares at sosx sosy
+  let ⟨a, b, hx⟩ := sosx
+  let ⟨c, d, hy⟩ := sosy
+  use a * c - b * d, a * d + b * c
+  grind
 
 open Function in
 example {g : β → γ} {f : α → β} (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
-  sorry
+  unfold Surjective
+  unfold Surjective at surjg surjf
+  intro c
+  let ⟨b, hb⟩ := surjg c
+  let ⟨a, ha⟩ := surjf b
+  have : (g ∘ f) a = c := by grind
+  grind
 
 example (P : α → Prop) (h : ¬∀ x, P x) : ∃ x, ¬P x := by
-  sorry
+  grind
 
 example {x y : ℝ} (h₀ : x ≤ y) (h₁ : ¬y ≤ x) : x ≤ y ∧ x ≠ y := by
-  sorry
+  grind
 
 example : ∃ m n : ℕ, 4 < m ∧ m < n ∧ n < 10 ∧ Nat.Prime m ∧ Nat.Prime n := by
-  sorry
+  use 5, 7
+  have : Nat.Prime 5 := by norm_num
+  have : Nat.Prime 7 := by norm_num
+  grind
 
 example {x y : ℝ} (h : x ^ 2 + y ^ 2 = 0) : x = 0 := by
-  sorry
+  by_contra
+  have : 0 < x^2 := by positivity
+  have : 0 <= y^2 := by positivity
+  grind
 
 example (x : ℝ) : |x + 3| < 5 → -8 < x ∧ x < 2 := by
-  sorry
+  grind
 
 example (h : y > x ^ 2) : y > 0 ∨ y < -1 := by
-  sorry
+  have : 0 <= x^2 := by positivity
+  grind
 
 example (h : x ^ 2 = y ^ 2) : x = y ∨ x = -y := by
-  sorry
+  by_cases x = y
+  · grind
+  · have : x = -y := by
+      by_contra
+      have ha : 0 <= x^2 := by positivity
+      have hb : 0 <= y^2 := by positivity
+      apply (Real.sqrt_inj ha hb).mpr h
 
 example {m n k : ℕ} (h : m ∣ n ∨ m ∣ k) : m ∣ n * k := by
   sorry

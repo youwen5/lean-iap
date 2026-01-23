@@ -119,7 +119,7 @@ lemma cjq3' (f g : α → α → α) (hid : ∀ x, f i₁ x = x ∧ f x i₂ = x
 example (x : ℤ) : x % 2 != 0 ↔ ∃ k, x = 2 * k + 1 := by
   constructor
   · let d := x % 2
-    intro h
+    intro
     have : d == 1 := by
       grind
     let q := (x - 1) / 2

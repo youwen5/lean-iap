@@ -182,7 +182,7 @@ def ICan'tBelieveItCanSort [LinearOrder α] (A : Array α) := Id.run do
     for hj : j in [:N] do
       if A[i] < A[j] then
         A := A.swap i j
-  A.toArray
+  return A.toArray
 
 
 def Array.insSort [LinearOrder α] (A : Array α) := Id.run do
@@ -195,7 +195,7 @@ def Array.insSort [LinearOrder α] (A : Array α) := Id.run do
         A := A.swap (i - j - 1) (i - j)
       else
         break
-  A.toArray
+  return A.toArray
 
 
 -- Local imperativity https://dl.acm.org/doi/10.1145/3547640
@@ -205,7 +205,7 @@ def kadane (A : Array ℤ) := Id.run do
   for x in A do
     cur := max x (cur + x)
     ans := max ans cur
-  ans
+  return ans
 
 
 def UpToN (xs : List ℕ) : List ℕ := do
@@ -214,3 +214,61 @@ def UpToN (xs : List ℕ) : List ℕ := do
   return y
 
 #eval UpToN [1, 2, 3]
+
+
+namespace Imperative
+
+open Std.Do
+
+variable [LinearOrder α] (A : Array α)
+
+theorem insSortPerm : A.insSort.Perm A := by
+  generalize h : A.insSort = x
+  apply Id.of_wp_run_eq h
+  mvcgen invariants
+  · ⇓⟨_, A'⟩ => ⌜A.Perm A'.toArray⌝
+  · ⇓⟨_, A'⟩ => ⌜A.Perm A'.toArray⌝
+  with grind [Array.Perm.trans, Array.Perm.symm, Array.swap_perm]
+
+abbrev Sorted := ∀ i (_ : 0 ≤ i ∧ i < A.size - 1), A[i] ≤ A[i + 1]
+
+abbrev SortedRange l r (_ : l ≤ A.size := by grind) (_ : r ≤ A.size := by grind) :=
+  ∀ i (_ : l ≤ i ∧ i < r - 1), A[i] ≤ A[i + 1]
+
+theorem insSortSorted : Sorted A.insSort := by
+  generalize h : A.insSort = x
+  apply Id.of_wp_run_eq h
+  mvcgen <;> expose_names
+  · exact ⇓⟨xs, A'⟩ => ⌜SortedRange A'.toArray 0 xs.pos (by grind) (by grind [List.length_append, xs.property])⌝
+  · exact ⇓⟨xs, A'⟩ => ⌜SortedRange A'.toArray 0 (cur - xs.pos) ∧ SortedRange A'.toArray (cur - xs.pos) (cur + 1)
+      ∧ ((_ : 0 < xs.pos ∧ xs.pos < cur) → A'[cur - xs.pos - 1]'(by grind) ≤ A'[cur - xs.pos + 1]'(by grind))⌝
+  case vc1.step.isTrue =>
+    simp at h_5 ⊢
+    and_intros
+    · grind
+    · intro i hi
+      by_cases i = cur - cur_1 - 1 ∨ i = cur - cur_1
+      · grind
+      · grind [h_5.2.1 i (by grind)]
+    · intro _
+      grind [h_5.1 (cur - cur_1 - 2) (by grind)]
+  case vc2.step.isFalse =>
+    simp_all
+    and_intros
+    · grind
+    · intro i hi
+      by_cases i < cur - cur_1 - 1
+      · exact h_5.1 i (by grind)
+      · by_cases cur - cur_1 ≤ i
+        · exact h_5.2.1 i (by grind)
+        · grind
+    · grind
+  case vc4.step.post.success =>
+    simp at h_3 ⊢
+    grind
+  all_goals grind
+
+theorem insSortCorrect : A.insSort.Perm A ∧ Sorted A.insSort :=
+  ⟨insSortPerm A, insSortSorted A⟩
+
+end Imperative

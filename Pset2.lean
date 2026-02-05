@@ -9,20 +9,16 @@ Prove the following lemmas in Lean.
 -/
 
 lemma two_plus_two : 2 + 2 = 4 := by
-  simp
+  grind
 
 lemma and_swap : p ∧ q → q ∧ p := by
-  intro h
-  rw [and_comm] at h
-  exact h
+  grind
 
 lemma add_rearrange {a b c d : ℝ} : 0 ≤ a + b + c + d ↔ -b - c ≤ a + d := by
   grind
 
 lemma three_not_even {x : ℤ} : 2 * x ≠ 3 := by
-  intro h
-  apply_fun (· % 2) at h
-  simp at h
+  grind
   
 lemma linear_arithmetic {a b c d e f : ℝ} :
     2 * a + b ≥ 1 →
@@ -89,7 +85,7 @@ lemma cjq1 (f : α → α → α) (hl : ∀ x, f l x = x) (hr : ∀ x, f x r = x
 
 lemma cjq2 (f : α → α → α) (h : ∀ x y, ∃ z, f x z = y ∧ ∀ z', f x z = f x z' → z = z')
     : ∃ g : α → α → α, ∀ x y, f x (g x y) = y ∧ g x (f x y) = y := by
-  use fun x y => Classical.choose (h x y)
+  use λ x y => Classical.choose <| h x y
   grind
 
 lemma cjq3 (f g : α → α → α) (hid : ∀ x, f i x = x ∧ f x i = x ∧ g j x = x ∧ g x j = x)
@@ -134,14 +130,64 @@ example (x : ℤ) : x % 2 != 0 ↔ ∃ k, x = 2 * k + 1 := by
 Write a recursive function that computes the index of least significant bit of a natural number `x`, i.e. the largest `k` such that `2 ^ k` divides `x`. Prove your that your function terminates and is correct.
 -/
 
-def lsb (x : ℕ) (hx : 0 < x) : ℕ :=
-  sorry
+def lsb (x : ℕ) (_ : 0 < x) : ℕ :=
+  if hl : x < 2 then
+    0
+  else if 2 ∣ x then 
+    1 + lsb (x / 2) (by grind)
+  else 0
 
 lemma lsb_div (x : ℕ) (hx : 0 < x) : 2 ^ lsb x hx ∣ x := by
-  sorry
+  induction x using Nat.strong_induction_on with | h n ih
+  unfold lsb
+  split
+  · grind
+  · split
+    · have hn : 0 < n / 2 := by grind
+      have : (2 ^ (1 + lsb (n / 2) hn)) / 2 = 2 ^ lsb (n / 2) hn := by
+        grind
+      have (x : ℕ) (h : x > 0) : (2 ^ x) / 2 = 2 ^ (x - 1) := by
+        grind [Nat.pow_sub_one]
+      suffices h : (2 ^ (1 + lsb (n / 2) hn)) / 2 ∣ n / 2 by
+        rw [dvd_iff_exists_eq_mul_left] at h ⊢
+        let ⟨y, hy⟩ := h
+        apply_fun (2 * ·) at hy
+        have : 2 * (n / 2) = n := by grind
+        use y
+        grind
+      grind
+    · grind
+
+example (m n : ℕ) (h1 : 2 ∣ m) (h2 : 2 ∣ n) (h3 : m / 2 ∣ n / 2) : m ∣ n := by
+  rw [dvd_iff_exists_eq_mul_left] at h1 h2 h3 ⊢
+  let ⟨m', hm⟩ := h1
+  let ⟨n', hn⟩ := h2
+  rw [hm, hn] at h3
+  simp at h3
+  let ⟨c, hc⟩ := h3
+  use c
+  grind
+
+
+#check Nat.pow_sub_one
 
 lemma lsb_largest (x : ℕ) (hx : 0 < x) : ∀ k > lsb x hx, ¬2 ^ k ∣ x := by
-  sorry
+  induction x using Nat.strong_induction_on with | _ n ih
+  intro k hk
+  unfold lsb at hk
+  split at hk
+  · by_contra h
+    rw [dvd_iff_exists_eq_mul_right] at h
+    grind
+  · split at hk
+    · have : ¬2 ^ (k - 1) ∣ n / 2 := by
+        apply ih (n / 2) (by grind) (by grind) (k - 1) (by grind)
+      by_contra
+      have : 2 ^ (k - 1) ∣ n / 2 := by grind [Nat.div_dvd_div, Nat.pow_sub_one]
+      grind
+    · by_contra h
+      rw [dvd_iff_exists_eq_mul_right] at h
+      grind
 
 /-
 ## 2.5

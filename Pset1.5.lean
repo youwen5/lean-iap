@@ -29,7 +29,7 @@ example (a b c d e : ℝ) (h₀ : a ≤ b) (h₁ : c < d) : a + Real.exp c + e <
 
 example (a b : ℝ) (h : a ≤ b) : Real.log (1 + Real.exp a) ≤ Real.log (1 + Real.exp b) := by
   apply Real.exp_le_exp.mpr at h
-  have : 1 + Real.exp a <= 1 + Real.exp b := by linarith
+  have : 1 + Real.exp a <= 1 + Real.exp b := by grind
   apply Real.log_le_log at this
   . grind
   . positivity
@@ -94,7 +94,6 @@ example : ∃ x : ℝ, 2 < x ∧ x < 3 := by
 
 def SumOfSquares [CommRing α] (x : α) := ∃ a b, x = a ^ 2 + b ^ 2
 
-
 example [CommRing α] {x y : α} (sosx : SumOfSquares x) (sosy : SumOfSquares y) : SumOfSquares (x * y) := by
   unfold SumOfSquares
   unfold SumOfSquares at sosx sosy
@@ -104,7 +103,7 @@ example [CommRing α] {x y : α} (sosx : SumOfSquares x) (sosy : SumOfSquares y)
   grind
 
 open Function in
-example {g : β → γ} {f : α → β} (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
+theorem x {g : β → γ} {f : α → β} (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
   unfold Surjective
   unfold Surjective at surjg surjf
   intro c
@@ -142,16 +141,23 @@ example (h : x ^ 2 = y ^ 2) : x = y ∨ x = -y := by
   by_cases x = y
   · grind
   · have : x = -y := by
-      by_contra
-      have ha : 0 <= x^2 := by positivity
-      have hb : 0 <= y^2 := by positivity
-      apply (Real.sqrt_inj ha hb).mpr h
+      have : x != y := by grind
+      grind
+    grind
 
 example {m n k : ℕ} (h : m ∣ n ∨ m ∣ k) : m ∣ n * k := by
-  sorry
+  grind
+
 
 example : ∀ f : α → Set α, ¬Function.Surjective f := by
-  sorry
+  unfold Function.Surjective
+  intro f
+  by_contra h
+  have h2 : ∀ b, ∃ a, f a = Set.singleton b := by
+    intro a
+    exact h <| Set.singleton a
+  let ⟨a, ha⟩ := h ∅
+  let ⟨b, hb⟩ := h2 a
 
 example (n : ℕ) : ∑ i ∈ Finset.range (n + 1), i ^ 2 = n * (n + 1) * (2 * n + 1) / 6 := by
   sorry

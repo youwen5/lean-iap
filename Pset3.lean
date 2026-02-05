@@ -91,7 +91,10 @@ def leanTo42Type (x : String) : Type :=
   if x = "lean" then ℕ else String
 
 def leanTo42 (x : String) : leanTo42Type x := by
-  sorry
+  unfold leanTo42Type
+  split
+  · use 42
+  · use! x
 
 /-
 ## 3.5
@@ -135,7 +138,6 @@ def yoneda' (f : Type u → Type v) [Functor f] (y : f α) : {β : Type u} → (
 -/
 
 def solution : String := sorry
-
 open Nat Real Quaternion CoxeterMatrix Lean in
 example : minFac '⓫'.toNat|>λ_11↦(·+97)<$>[0/0,_11,-(⟨1,0,2,4⟩:ℍ[ℤ])^2|>.re.toNat,defaultMaxRecDepth%101,catalan 4,_11,(φ∘φ∘φ∘φ∘φ∘φ<|4‼‼)!,↑((4:Fin 24)-6),⌈deriv (sin ·^69) π⌉₊,_11,Nat.card<|Aₙ 2|>.Group]
     = solution.toList.map Char.toNat := by
